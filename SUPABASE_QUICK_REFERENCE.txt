@@ -1,0 +1,254 @@
+═══════════════════════════════════════════════════════════════════════════════
+                        SUPABASE MIGRATION - QUICK REFERENCE
+═══════════════════════════════════════════════════════════════════════════════
+
+🚀 QUICK START (5 MINUTES)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. CREATE SUPABASE PROJECT
+   → Go to https://supabase.com
+   → Create new project
+   → Save password!
+
+2. GET CREDENTIALS
+   → Settings > API
+   → Copy Project URL
+   → Copy anon public key
+
+3. RUN MIGRATIONS
+   Option A (SQL Editor):
+   → Copy /supabase/migrations/20260606000001_initial_schema.sql
+   → Paste in SQL Editor
+   → Run
+   → Repeat for 20260606000002_rls_policies.sql
+
+   Option B (CLI):
+   → supabase login
+   → supabase link --project-ref <ref>
+   → supabase db push
+
+4. CONFIGURE ENVIRONMENT
+   → Create .env.local
+   → Add:
+     VITE_SUPABASE_URL=https://your-project.supabase.co
+     VITE_SUPABASE_ANON_KEY=your-anon-key-here
+
+5. RUN APPLICATION
+   → pnpm install
+   → pnpm dev
+   → Visit http://localhost:5173
+
+═══════════════════════════════════════════════════════════════════════════════
+📊 DATABASE SCHEMA
+═══════════════════════════════════════════════════════════════════════════════
+
+TABLES (16):
+  shop_users          - Shop owners (multi-tenant root)
+  users               - Shop employees
+  categories          - Product categories
+  products            - Inventory
+  customers           - Customer accounts
+  sales               - Sales transactions
+  sale_items          - Sale line items
+  payments            - Customer payments
+  suppliers           - Supplier accounts
+  supplier_purchases  - Purchase orders
+  supplier_payments   - Supplier payments
+  shareholders        - Shareholder records
+  expenses            - Business expenses
+  withdrawals         - Cash withdrawals
+  cash_ledger         - Cash balance
+  activity_logs       - Audit trail
+
+RLS POLICIES (50+):
+  ✅ All tables secured
+  ✅ Multi-tenant isolation
+  ✅ Permission-based access
+  ✅ Role-based restrictions
+
+═══════════════════════════════════════════════════════════════════════════════
+🔐 AUTHENTICATION
+═══════════════════════════════════════════════════════════════════════════════
+
+REGISTRATION (Shop Owner):
+  const { signUp } = useAuth();
+  await signUp({
+    email: 'owner@shop.com',
+    password: 'SecurePass123!',
+    name: 'John Doe',
+    shopName: 'My Shop',
+    phone: '+1234567890',
+  });
+
+LOGIN:
+  const { signIn } = useAuth();
+  await signIn({
+    email: 'owner@shop.com',
+    password: 'SecurePass123!',
+  });
+
+LOGOUT:
+  const { signOut } = useAuth();
+  await signOut();
+
+CHECK AUTH STATUS:
+  const { user, isAuthenticated, isLoading, role, shopId } = useAuth();
+
+═══════════════════════════════════════════════════════════════════════════════
+📦 DATA OPERATIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+PRODUCTS:
+  // List all
+  const { data: products } = useProducts();
+  
+  // Search
+  const { data: products } = useProducts('search term');
+  
+  // Get one
+  const { data: product } = useProduct(productId);
+  
+  // Create
+  const create = useCreateProduct();
+  await create.mutateAsync({ name, price, stock, ... });
+  
+  // Update
+  const update = useUpdateProduct();
+  await update.mutateAsync({ id, updates: { name: 'New Name' } });
+  
+  // Delete
+  const del = useDeleteProduct();
+  await del.mutateAsync(productId);
+
+CUSTOMERS:
+  const { data: customers } = useCustomers();
+  const create = useCreateCustomer();
+  const update = useUpdateCustomer();
+  const del = useDeleteCustomer();
+
+SALES:
+  const create = useCreateSale();
+  await create.mutateAsync({
+    customer_id: 'uuid',
+    currency: 'AFN',
+    items: [{ product_id: 'uuid', quantity: 2, price: 100 }],
+    discount: 0,
+    paid_amount: 200,
+  });
+  // Automatically:
+  //   - Updates stock
+  //   - Updates customer balance
+  //   - Updates cash ledger
+  //   - Logs activity
+
+═══════════════════════════════════════════════════════════════════════════════
+🔧 TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+ERROR: "Missing Supabase environment variables"
+FIX: Create .env.local with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
+
+ERROR: "Row level security policy violated"
+FIX: Check authentication and permissions:
+     - const { session, shopId, role } = useAuth();
+     - Verify user is logged in
+     - Verify user has correct permissions
+
+ERROR: Data not showing
+FIX: Invalidate cache:
+     const queryClient = useQueryClient();
+     queryClient.invalidateQueries({ queryKey: ['products'] });
+
+ERROR: RLS policies blocking legitimate queries
+DEBUG: In Supabase SQL Editor:
+       SELECT auth.uid();                    -- Current user ID
+       SELECT get_user_shop_id();            -- Shop ID
+       SELECT get_user_role();               -- User role
+       SELECT has_permission('products:read'); -- Check permission
+
+═══════════════════════════════════════════════════════════════════════════════
+📁 KEY FILES
+═══════════════════════════════════════════════════════════════════════════════
+
+MIGRATIONS:
+  supabase/migrations/20260606000001_initial_schema.sql
+  supabase/migrations/20260606000002_rls_policies.sql
+
+CONFIGURATION:
+  src/app/lib/supabase.ts        - Supabase client
+  src/app/lib/react-query.ts     - React Query config
+  .env.local                     - Environment variables
+
+HOOKS:
+  src/app/hooks/useAuth.ts       - Authentication
+  src/app/hooks/useProducts.ts   - Products CRUD
+  src/app/hooks/useCustomers.ts  - Customers CRUD
+  src/app/hooks/useSales.ts      - Sales transactions
+
+DOCUMENTATION:
+  SUPABASE_MIGRATION_GUIDE.md    - Complete guide (500+ lines)
+  SUPABASE_MIGRATION_SUMMARY.md  - Summary & architecture
+  SUPABASE_QUICK_REFERENCE.txt   - This file
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ MIGRATION CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+SETUP:
+  ☐ Supabase project created
+  ☐ Credentials saved
+  ☐ Migrations run
+  ☐ .env.local configured
+  ☐ Dependencies installed
+
+TESTING:
+  ☐ Registration works
+  ☐ Login works
+  ☐ Products CRUD works
+  ☐ Customers CRUD works
+  ☐ Sales creation works
+  ☐ Permissions enforced
+  ☐ Multi-tenancy verified
+
+PRODUCTION:
+  ☐ Environment variables set
+  ☐ Database backups enabled
+  ☐ Monitoring configured
+  ☐ Security audit complete
+
+═══════════════════════════════════════════════════════════════════════════════
+🎯 WHAT CHANGED
+═══════════════════════════════════════════════════════════════════════════════
+
+REMOVED:
+  ❌ localStorage usage
+  ❌ Mock data
+  ❌ Hardcoded credentials
+  ❌ Frontend-only authorization
+  ❌ ShopUserContext provider
+  ❌ AppContext provider
+
+ADDED:
+  ✅ Supabase client
+  ✅ React Query
+  ✅ Custom data hooks
+  ✅ RLS policies
+  ✅ Database migrations
+  ✅ TypeScript types
+  ✅ Activity logging
+  ✅ Multi-tenancy
+
+═══════════════════════════════════════════════════════════════════════════════
+📞 SUPPORT
+═══════════════════════════════════════════════════════════════════════════════
+
+Docs:    SUPABASE_MIGRATION_GUIDE.md (detailed)
+Summary: SUPABASE_MIGRATION_SUMMARY.md (architecture)
+Quick:   SUPABASE_QUICK_REFERENCE.txt (this file)
+
+Supabase: https://supabase.com/docs
+React Query: https://tanstack.com/query/latest
+
+═══════════════════════════════════════════════════════════════════════════════
+                           MIGRATION STATUS: COMPLETE ✅
+═══════════════════════════════════════════════════════════════════════════════
