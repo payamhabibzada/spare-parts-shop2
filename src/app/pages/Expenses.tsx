@@ -171,9 +171,9 @@ export default function Expenses() {
       exp.amount_usd.toString(),
     ]);
     exportToPDF(
-      language === "fa" ? "لیست مصارف" : "Expenses List",
       headers,
       data,
+      language === "fa" ? "لیست مصارف" : "Expenses List",
       language === "fa" ? "rtl" : "ltr"
     );
     toast.success(language === "fa" ? "فایل PDF دانلود شد" : "PDF file downloaded");
@@ -200,7 +200,7 @@ export default function Expenses() {
                 ? "bg-blue-500 text-white"
                 : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
             }`}
-            style={{ fontWeight: 500 }}
+            className="font-medium"
           >
             <Filter className="w-4 h-4" />
             {language === "fa" ? "فیلتر" : "Filter"}
@@ -210,24 +210,21 @@ export default function Expenses() {
           </button>
           <button
             onClick={handleExportExcel}
-            className="flex items-center gap-2 bg-green-50 hover:bg-green-100 text-green-700 border border-green-200 px-3 py-2.5 rounded-xl transition-colors text-sm"
-            style={{ fontWeight: 500 }}
+            className="flex items-center gap-2 bg-green-50 hover:bg-green-100 text-green-700 border border-green-200 px-3 py-2.5 rounded-xl transition-colors text-sm font-medium"
           >
             <FileSpreadsheet className="w-4 h-4" />
             {language === "fa" ? "اکسل" : "Excel"}
           </button>
           <button
             onClick={handleExportPDF}
-            className="flex items-center gap-2 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 px-3 py-2.5 rounded-xl transition-colors text-sm"
-            style={{ fontWeight: 500 }}
+            className="flex items-center gap-2 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 px-3 py-2.5 rounded-xl transition-colors text-sm font-medium"
           >
             <FileDown className="w-4 h-4" />
             {language === "fa" ? "PDF" : "PDF"}
           </button>
           <button
             onClick={openAdd}
-            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2.5 rounded-xl transition-colors text-sm"
-            style={{ fontWeight: 600 }}
+            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2.5 rounded-xl transition-colors text-sm font-semibold"
           >
             <Plus className="w-4 h-4" />
             {language === "fa" ? "افزودن مصرف" : "Add Expense"}
@@ -308,7 +305,7 @@ export default function Expenses() {
             <TrendingDown className="w-10 h-10" />
             <div>
               <p className="text-red-100 text-sm mb-1">{language === "fa" ? "کل مصارف" : "Total Expenses"}</p>
-              <p className="text-2xl" style={{ fontWeight: 700 }}>
+              <p className="text-2xl font-bold">
                 {formatCurrency(totalExpenses, currency)}
               </p>
             </div>
@@ -320,7 +317,7 @@ export default function Expenses() {
             <Tag className="w-10 h-10 text-blue-500" />
             <div>
               <p className="text-gray-500 text-sm mb-1">{language === "fa" ? "تعداد مصارف" : "Total Records"}</p>
-              <p className="text-2xl text-gray-900" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-gray-900 font-bold">
                 {filtered.length}
               </p>
             </div>
@@ -332,7 +329,7 @@ export default function Expenses() {
             <Tag className="w-10 h-10 text-violet-500" />
             <div>
               <p className="text-gray-500 text-sm mb-1">{language === "fa" ? "دسته‌بندی‌ها فعال" : "Active Categories"}</p>
-              <p className="text-2xl text-gray-900" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-gray-900 font-bold">
                 {categoryTotals.length}
               </p>
             </div>
@@ -346,22 +343,22 @@ export default function Expenses() {
           <table className="w-full">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-100">
-                <th className="text-right px-5 py-4 text-sm text-gray-600" style={{ fontWeight: 600 }}>
+                <th className="text-right px-5 py-4 text-sm text-gray-600 font-semibold">
                   {language === "fa" ? "تاریخ" : "Date"}
                 </th>
-                <th className="text-right px-5 py-4 text-sm text-gray-600" style={{ fontWeight: 600 }}>
+                <th className="text-right px-5 py-4 text-sm text-gray-600 font-semibold">
                   {language === "fa" ? "دسته‌بندی" : "Category"}
                 </th>
-                <th className="text-right px-5 py-4 text-sm text-gray-600" style={{ fontWeight: 600 }}>
+                <th className="text-right px-5 py-4 text-sm text-gray-600 font-semibold">
                   {language === "fa" ? "توضیحات" : "Description"}
                 </th>
-                <th className="text-right px-5 py-4 text-sm text-gray-600" style={{ fontWeight: 600 }}>
+                <th className="text-right px-5 py-4 text-sm text-gray-600 font-semibold">
                   {language === "fa" ? "مبلغ (افغانی)" : "Amount (AFN)"}
                 </th>
-                <th className="text-right px-5 py-4 text-sm text-gray-600" style={{ fontWeight: 600 }}>
+                <th className="text-right px-5 py-4 text-sm text-gray-600 font-semibold">
                   {language === "fa" ? "مبلغ (دالر)" : "Amount (USD)"}
                 </th>
-                <th className="text-right px-5 py-4 text-sm text-gray-600" style={{ fontWeight: 600 }}>
+                <th className="text-right px-5 py-4 text-sm text-gray-600 font-semibold">
                   {language === "fa" ? "عملیات" : "Actions"}
                 </th>
               </tr>
@@ -379,17 +376,17 @@ export default function Expenses() {
                   <tr key={exp.expense_id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-5 py-4 text-sm text-gray-600">{exp.date}</td>
                     <td className="px-5 py-4">
-                      <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-lg text-xs" style={{ fontWeight: 500 }}>
+                      <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-lg text-xs font-medium">
                         {exp.category}
                       </span>
                     </td>
-                    <td className="px-5 py-4 text-sm text-gray-800" style={{ fontWeight: 500 }}>
+                    <td className="px-5 py-4 text-sm text-gray-800 font-medium">
                       {exp.description}
                     </td>
-                    <td className="px-5 py-4 text-sm text-red-600" style={{ fontWeight: 600 }}>
+                    <td className="px-5 py-4 text-sm text-red-600 font-semibold">
                       {formatCurrency(exp.amount_afn, "AFN")}
                     </td>
-                    <td className="px-5 py-4 text-sm text-red-600" style={{ fontWeight: 600 }}>
+                    <td className="px-5 py-4 text-sm text-red-600 font-semibold">
                       {formatCurrency(exp.amount_usd, "USD")}
                     </td>
                     <td className="px-5 py-4">
@@ -421,7 +418,7 @@ export default function Expenses() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" dir={language === "fa" ? "rtl" : "ltr"}>
           <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl">
             <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-              <h3 className="text-gray-800" style={{ fontWeight: 700 }}>
+              <h3 className="text-gray-800 font-bold">
                 {editExpense ? (language === "fa" ? "ویرایش مصرف" : "Edit Expense") : (language === "fa" ? "افزودن مصرف جدید" : "Add New Expense")}
               </h3>
               <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600">
@@ -500,16 +497,14 @@ export default function Expenses() {
               <div className="flex gap-3 pt-2">
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2.5 rounded-xl text-sm transition-colors"
-                  style={{ fontWeight: 600 }}
+                  className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2.5 rounded-xl text-sm transition-colors font-semibold"
                 >
                   {editExpense ? (language === "fa" ? "ذخیره تغییرات" : "Save Changes") : (language === "fa" ? "افزودن" : "Add")}
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm transition-colors"
-                  style={{ fontWeight: 500 }}
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm transition-colors font-medium"
                 >
                   {language === "fa" ? "انصراف" : "Cancel"}
                 </button>
@@ -526,7 +521,7 @@ export default function Expenses() {
             <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Trash2 className="w-6 h-6 text-red-500" />
             </div>
-            <h3 className="text-gray-800 mb-2" style={{ fontWeight: 700 }}>
+            <h3 className="text-gray-800 mb-2 font-bold">
               {language === "fa" ? "حذف مصرف" : "Delete Expense"}
             </h3>
             <p className="text-gray-500 text-sm mb-6">
@@ -535,15 +530,13 @@ export default function Expenses() {
             <div className="flex gap-3">
               <button
                 onClick={() => handleDelete(deleteConfirm)}
-                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-xl text-sm transition-colors"
-                style={{ fontWeight: 600 }}
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-xl text-sm transition-colors font-semibold"
               >
                 {language === "fa" ? "بله، حذف شود" : "Yes, Delete"}
               </button>
               <button
                 onClick={() => setDeleteConfirm(null)}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm transition-colors"
-                style={{ fontWeight: 500 }}
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm transition-colors font-medium"
               >
                 {language === "fa" ? "انصراف" : "Cancel"}
               </button>

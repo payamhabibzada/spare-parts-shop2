@@ -13,9 +13,9 @@ export default function BarcodeScanner({ onScan, onClose, language = "fa" }: Bar
   const videoRef = useRef<HTMLVideoElement>(null);
   const controlsRef = useRef<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const [scanning, setScanning] = useState(true);
   const [cameras, setCameras] = useState<MediaDeviceInfo[]>([]);
   const [selectedCamera, setSelectedCamera] = useState<string | undefined>(undefined);
+  const [scanning, setScanning] = useState(false);
 
   const startScanner = async (deviceId?: string) => {
     setError(null);
@@ -34,7 +34,7 @@ export default function BarcodeScanner({ onScan, onClose, language = "fa" }: Bar
       const controls = await reader.decodeFromVideoDevice(
         deviceId,
         videoRef.current,
-        (result, err) => {
+        (result) => {
           if (result) {
             const code = result.getText();
             try { controls.stop(); } catch {}
@@ -43,8 +43,8 @@ export default function BarcodeScanner({ onScan, onClose, language = "fa" }: Bar
         }
       );
       controlsRef.current = controls;
-    } catch (err: any) {
-      setError(err?.message || "Camera error");
+    } catch (error: any) {
+      setError(error?.message || "Camera error");
       setScanning(false);
     }
   };
@@ -93,7 +93,7 @@ export default function BarcodeScanner({ onScan, onClose, language = "fa" }: Bar
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
           <div className="flex items-center gap-2">
             <Camera className="w-5 h-5 text-blue-500" />
-            <span className="text-gray-800 text-sm" style={{ fontWeight: 600 }}>
+            <span className="text-gray-800 text-sm font-semibold">
               {t.title}
             </span>
           </div>
@@ -108,7 +108,7 @@ export default function BarcodeScanner({ onScan, onClose, language = "fa" }: Bar
         </div>
 
         {/* Camera View */}
-        <div className="relative bg-black" style={{ height: 280 }}>
+        <div className="relative bg-black h-[280px]">
           <video
             ref={videoRef}
             className="w-full h-full object-cover"
@@ -127,14 +127,14 @@ export default function BarcodeScanner({ onScan, onClose, language = "fa" }: Bar
                 <div className="absolute bottom-0 left-0 w-5 h-5 border-b-4 border-l-4 border-green-400 rounded-bl" />
                 <div className="absolute bottom-0 right-0 w-5 h-5 border-b-4 border-r-4 border-green-400 rounded-br" />
                 {/* Scanning line animation */}
-                <div
-                  className="absolute left-1 right-1 h-0.5 bg-green-400 opacity-80"
-                  style={{
-                    animation: "scanLine 1.5s ease-in-out infinite alternate",
-                    top: "50%",
-                  }}
-                />
+                <div className="absolute left-1 right-1 h-0.5 bg-green-400 opacity-80 top-1/2 animate-[scanLine_1.5s_ease-in-out_infinite_alternate]" />
               </div>
+
+              {scanning && (
+                <div className="absolute bottom-4 left-4 text-xs text-white/80">
+                  {t.permissionMsg}
+                </div>
+              )}
             </div>
           )}
 

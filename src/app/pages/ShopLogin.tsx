@@ -16,7 +16,7 @@ export default function ShopLogin() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!email.trim() || !password.trim()) {
@@ -24,7 +24,7 @@ export default function ShopLogin() {
       return;
     }
 
-    const success = loginShopUser(email, password);
+    const success = await loginShopUser(email, password);
     if (success) {
       toast.success(language === "fa" ? "ورود موفقیت‌آمیز بود!" : "Login successful!");
       navigate("/");
@@ -41,7 +41,7 @@ export default function ShopLogin() {
           <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
             <Store className="w-9 h-9 text-white" />
           </div>
-          <h1 className="text-gray-800 text-2xl mb-1" style={{ fontWeight: 700 }}>
+          <h1 className="text-gray-800 text-2xl mb-1 font-bold">
             {language === "fa" ? "سیستم مدیریت دوکانداری" : "Shop Management System"}
           </h1>
           <p className="text-gray-500 text-sm">

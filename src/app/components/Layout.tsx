@@ -9,8 +9,6 @@ import {
   Package,
   Users,
   ShoppingCart,
-  CreditCard,
-  Store,
   Menu,
   X,
   Tags,
@@ -195,8 +193,8 @@ export function Layout() {
             <svg viewBox="0 0 300 300" className="w-8 h-8" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="dbGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" style={{stopColor: "#3B82F6", stopOpacity: 1}} />
-                  <stop offset="100%" style={{stopColor: "#1D4ED8", stopOpacity: 1}} />
+                  <stop offset="0%" stopColor="#3B82F6" stopOpacity="1" />
+                  <stop offset="100%" stopColor="#1D4ED8" stopOpacity="1" />
                 </linearGradient>
               </defs>
               <ellipse cx="150" cy="80" rx="70" ry="20" fill="url(#dbGradient2)"/>
@@ -212,10 +210,7 @@ export function Layout() {
             </svg>
           </div>
           <div className="flex-1 min-w-0">
-            <h1
-              className="text-gray-800 text-sm truncate"
-              style={{ fontWeight: 700 }}
-            >
+            <h1 className="text-gray-800 text-sm truncate font-bold">
               {currentShopUser?.shop_name || "سیستم دوکانداری"}
             </h1>
             <p className="text-gray-400 text-xs truncate">
@@ -231,10 +226,7 @@ export function Layout() {
         </div>
 
         {/* Navigation */}
-        <nav
-          className="px-3 py-4 space-y-1 overflow-y-auto"
-          style={{ maxHeight: "calc(100vh - 200px)" }}
-        >
+        <nav className="px-3 py-4 space-y-1 overflow-y-auto max-h-[calc(100vh-200px)]">
           {filteredNavItems.map(
             ({ to, label, labelPs, labelEn, icon: Icon }) => (
               <NavLink
@@ -251,7 +243,7 @@ export function Layout() {
                 }
               >
                 <Icon className="w-5 h-5 flex-shrink-0" />
-                <span style={{ fontWeight: 500 }}>
+                <span className="font-medium">
                   {language === "fa" ? label : language === "ps" ? labelPs : labelEn}
                 </span>
               </NavLink>
@@ -277,10 +269,7 @@ export function Layout() {
           >
             <Menu className="w-6 h-6" />
           </button>
-          <h2
-            className="text-gray-800 flex-1"
-            style={{ fontWeight: 600 }}
-          >
+          <h2 className="text-gray-800 flex-1 font-semibold">
             {getPageTitle()}
           </h2>
 

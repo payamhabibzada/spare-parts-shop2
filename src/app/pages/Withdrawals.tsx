@@ -241,9 +241,9 @@ export default function Withdrawals() {
       w.description || "-",
     ]);
     exportToPDF(
-      language === "fa" ? "لیست برداشت‌ها" : language === "ps" ? "د وباسنو لیست" : "Withdrawals List",
       headers,
       data,
+      language === "fa" ? "لیست برداشت‌ها" : language === "ps" ? "د وباسنو لیست" : "Withdrawals List",
       language === "fa" || language === "ps" ? "rtl" : "ltr"
     );
     toast.success(language === "fa" ? "فایل PDF دانلود شد" : language === "ps" ? "PDF فایل ډاونلوډ شو" : "PDF file downloaded");
@@ -314,7 +314,7 @@ export default function Withdrawals() {
                   {/* نمایش اطلاعات مالی لحظه‌ای */}
                   {selectedShareholderInfo && (
                     <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 space-y-3">
-                      <p className="text-green-800 text-sm" style={{ fontWeight: 700 }}>
+                      <p className="text-green-800 text-sm font-bold">
                         {language === "fa" ? "وضعیت مالی سهام‌دار" :
                          language === "ps" ? "د ونډه لرونکي مالي حالت" :
                          "Shareholder Financial Status"}
@@ -324,7 +324,7 @@ export default function Withdrawals() {
                       <div className="bg-white rounded-lg p-3 border border-green-100">
                         <div className="flex items-center gap-1.5 mb-2">
                           <TrendingUp className="w-3.5 h-3.5 text-green-600" />
-                          <p className="text-xs text-green-700" style={{ fontWeight: 600 }}>
+                          <p className="text-xs text-green-700 font-semibold">
                             {language === "fa" ? `سهم مفاد (${selectedShareholderInfo.sh.share_percentage}%)` :
                              language === "ps" ? `د ګټې برخه (${selectedShareholderInfo.sh.share_percentage}%)` :
                              `Profit Share (${selectedShareholderInfo.sh.share_percentage}%)`}
@@ -333,13 +333,13 @@ export default function Withdrawals() {
                         <div className="grid grid-cols-2 gap-2">
                           <div>
                             <p className="text-xs text-gray-400">{language === "fa" ? "افغانی" : language === "ps" ? "افغانۍ" : "AFN"}</p>
-                            <p className="text-green-700 text-sm" style={{ fontWeight: 700 }}>
+                            <p className="text-green-700 text-sm font-bold">
                               {formatCurrency(selectedShareholderInfo.totalShareAfn, "AFN")}
                             </p>
                           </div>
                           <div>
                             <p className="text-xs text-gray-400">{language === "fa" ? "دالر" : language === "ps" ? "ډالر" : "USD"}</p>
-                            <p className="text-green-700 text-sm" style={{ fontWeight: 700 }}>
+                            <p className="text-green-700 text-sm font-bold">
                               {formatCurrency(selectedShareholderInfo.totalShareUsd, "USD")}
                             </p>
                           </div>
@@ -351,7 +351,7 @@ export default function Withdrawals() {
                         <div className="bg-white rounded-lg p-3 border border-orange-100">
                           <div className="flex items-center gap-1.5 mb-2">
                             <ArrowDownToLine className="w-3.5 h-3.5 text-orange-500" />
-                            <p className="text-xs text-orange-600" style={{ fontWeight: 600 }}>
+                            <p className="text-xs text-orange-600 font-semibold">
                               {language === "fa" ? "قبلاً برداشت شده" :
                                language === "ps" ? "مخکې وباسل شوي" :
                                "Previously Withdrawn"}
@@ -361,7 +361,7 @@ export default function Withdrawals() {
                             {selectedShareholderInfo.withdrawnAfn > 0 && (
                               <div>
                                 <p className="text-xs text-gray-400">{language === "fa" ? "افغانی" : language === "ps" ? "افغانۍ" : "AFN"}</p>
-                                <p className="text-orange-600 text-sm" style={{ fontWeight: 600 }}>
+                                <p className="text-orange-600 text-sm font-semibold">
                                   {formatCurrency(selectedShareholderInfo.withdrawnAfn, "AFN")}
                                 </p>
                               </div>
@@ -369,7 +369,7 @@ export default function Withdrawals() {
                             {selectedShareholderInfo.withdrawnUsd > 0 && (
                               <div>
                                 <p className="text-xs text-gray-400">{language === "fa" ? "دالر" : language === "ps" ? "ډالر" : "USD"}</p>
-                                <p className="text-orange-600 text-sm" style={{ fontWeight: 600 }}>
+                                <p className="text-orange-600 text-sm font-semibold">
                                   {formatCurrency(selectedShareholderInfo.withdrawnUsd, "USD")}
                                 </p>
                               </div>
@@ -383,7 +383,7 @@ export default function Withdrawals() {
                         <div className="bg-red-50 rounded-lg p-3 border border-red-300">
                           <div className="flex items-center gap-1.5 mb-2">
                             <Wallet className="w-3.5 h-3.5 text-red-600" />
-                            <p className="text-xs text-red-700" style={{ fontWeight: 700 }}>
+                            <p className="text-xs text-red-700 font-bold">
                               {language === "fa" ? "باقی‌دار (بدهکار)" :
                                language === "ps" ? "پاتې پور (مقروض)" :
                                "Debtor (Overpaid)"}
@@ -393,7 +393,7 @@ export default function Withdrawals() {
                             {selectedShareholderInfo.debtAfn > 0 && (
                               <div>
                                 <p className="text-xs text-gray-400">{language === "fa" ? "افغانی" : language === "ps" ? "افغانۍ" : "AFN"}</p>
-                                <p className="text-lg text-red-700" style={{ fontWeight: 700 }}>
+                                <p className="text-lg text-red-700 font-bold">
                                   {formatCurrency(selectedShareholderInfo.debtAfn, "AFN")}
                                 </p>
                               </div>
@@ -401,7 +401,7 @@ export default function Withdrawals() {
                             {selectedShareholderInfo.debtUsd > 0 && (
                               <div>
                                 <p className="text-xs text-gray-400">{language === "fa" ? "دالر" : language === "ps" ? "ډالر" : "USD"}</p>
-                                <p className="text-lg text-red-700" style={{ fontWeight: 700 }}>
+                                <p className="text-lg text-red-700 font-bold">
                                   {formatCurrency(selectedShareholderInfo.debtUsd, "USD")}
                                 </p>
                               </div>
@@ -417,7 +417,7 @@ export default function Withdrawals() {
                         <div className="bg-white rounded-lg p-3 border border-emerald-200">
                           <div className="flex items-center gap-1.5 mb-2">
                             <Wallet className="w-3.5 h-3.5 text-emerald-600" />
-                            <p className="text-xs text-emerald-700" style={{ fontWeight: 700 }}>
+                            <p className="text-xs text-emerald-700 font-bold">
                               {language === "fa" ? "مفاد قابل برداشت" :
                                language === "ps" ? "د وباسلو وړ ګټه" :
                                "Available Profit"}
@@ -426,13 +426,13 @@ export default function Withdrawals() {
                           <div className="grid grid-cols-2 gap-2">
                             <div>
                               <p className="text-xs text-gray-400">{language === "fa" ? "افغانی" : language === "ps" ? "افغانۍ" : "AFN"}</p>
-                              <p className={`text-lg ${selectedShareholderInfo.availableAfn > 0 ? "text-emerald-700" : "text-gray-400"}`} style={{ fontWeight: 700 }}>
+                              <p className={`text-lg ${selectedShareholderInfo.availableAfn > 0 ? "text-emerald-700" : "text-gray-400"}`} className="font-bold">
                                 {formatCurrency(selectedShareholderInfo.availableAfn, "AFN")}
                               </p>
                             </div>
                             <div>
                               <p className="text-xs text-gray-400">{language === "fa" ? "دالر" : language === "ps" ? "ډالر" : "USD"}</p>
-                              <p className={`text-lg ${selectedShareholderInfo.availableUsd > 0 ? "text-emerald-700" : "text-gray-400"}`} style={{ fontWeight: 700 }}>
+                              <p className={`text-lg ${selectedShareholderInfo.availableUsd > 0 ? "text-emerald-700" : "text-gray-400"}`} className="font-bold">
                                 {formatCurrency(selectedShareholderInfo.availableUsd, "USD")}
                               </p>
                             </div>
@@ -484,7 +484,7 @@ export default function Withdrawals() {
                 </>
               ) : (
                 <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                  <p className="text-blue-800 text-sm mb-3" style={{ fontWeight: 600 }}>
+                  <p className="text-blue-800 text-sm mb-3 font-semibold">
                     {language === "fa" ? "مشتری جدید" :
                     language === "ps" ? "نوی پیرودونکی" :
                     "New Customer"}
@@ -661,7 +661,7 @@ export default function Withdrawals() {
               {language === "fa" ? "کل برداشت (افغانی)" : language === "ps" ? "ټول وباسنه (افغانۍ)" : "Total Withdrawals (AFN)"}
             </p>
           </div>
-          <p className="text-3xl" style={{ fontWeight: 700 }}>
+          <p className="text-3xl font-bold">
             {formatCurrency(totalAfn, "AFN")}
           </p>
         </div>
@@ -672,7 +672,7 @@ export default function Withdrawals() {
               {language === "fa" ? "کل برداشت (دالر)" : language === "ps" ? "ټول وباسنه (ډالر)" : "Total Withdrawals (USD)"}
             </p>
           </div>
-          <p className="text-3xl" style={{ fontWeight: 700 }}>
+          <p className="text-3xl font-bold">
             {formatCurrency(totalUsd, "USD")}
           </p>
         </div>
@@ -710,14 +710,14 @@ export default function Withdrawals() {
                           ? "bg-purple-100 text-purple-700"
                           : "bg-blue-100 text-blue-700"
                       }`}
-                      style={{ fontWeight: 500 }}
+                      className="font-medium"
                     >
                       {w.category === "shareholder"
                         ? (language === "fa" ? "سهام‌دار" : language === "ps" ? "ونډه لرونکی" : "Shareholder")
                         : (language === "fa" ? "مشتری" : language === "ps" ? "پیرودونکی" : "Customer")}
                     </span>
                   </TableCell>
-                  <TableCell style={{ fontWeight: 500 }}>{w.person_name}</TableCell>
+                  <TableCell className="font-medium">{w.person_name}</TableCell>
                   <TableCell>{w.amount_afn > 0 ? formatCurrency(w.amount_afn, "AFN") : "-"}</TableCell>
                   <TableCell>{w.amount_usd > 0 ? formatCurrency(w.amount_usd, "USD") : "-"}</TableCell>
                   <TableCell className="text-gray-600 text-sm">{w.description || "-"}</TableCell>

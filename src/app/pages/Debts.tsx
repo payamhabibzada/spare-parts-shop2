@@ -23,12 +23,10 @@ import {
   Search,
   Eye,
   CreditCard,
-  Download,
   FileSpreadsheet,
   FileText,
   DollarSign,
   Users,
-  TrendingUp,
   Plus,
   UserPlus,
 } from "lucide-react";
@@ -251,7 +249,7 @@ export default function Debts() {
                 language === "ps" ? "ټول پور (افغانۍ)" :
                 "Total Debt (AFN)"}
               </p>
-              <p className="text-2xl mt-1" style={{ fontWeight: 700 }}>
+              <p className="text-2xl mt-1 font-bold">
                 {formatCurrency(totalDebtAfn, "AFN")}
               </p>
             </div>
@@ -267,7 +265,7 @@ export default function Debts() {
                 language === "ps" ? "ټول پور (ډالر)" :
                 "Total Debt (USD)"}
               </p>
-              <p className="text-2xl mt-1" style={{ fontWeight: 700 }}>
+              <p className="text-2xl mt-1 font-bold">
                 {formatCurrency(totalDebtUsd, "USD")}
               </p>
             </div>
@@ -283,7 +281,7 @@ export default function Debts() {
                 language === "ps" ? "د پوروالانو شمیر" :
                 "Debtors Count"}
               </p>
-              <p className="text-2xl mt-1" style={{ fontWeight: 700 }}>
+              <p className="text-2xl mt-1 font-bold">
                 {debtorsCount}
               </p>
             </div>
@@ -384,11 +382,11 @@ export default function Debts() {
             ) : (
               debtorCustomers.map((c) => (
                 <TableRow key={c.customer_id}>
-                  <TableCell style={{ fontWeight: 500 }}>{c.name}</TableCell>
+                  <TableCell className="font-medium">{c.name}</TableCell>
                   <TableCell className="text-gray-600">{c.phone}</TableCell>
                   <TableCell>
                     {c.balance_afn > 0 ? (
-                      <span className="text-red-600" style={{ fontWeight: 600 }}>
+                      <span className="text-red-600 font-semibold">
                         {formatCurrency(c.balance_afn, "AFN")}
                       </span>
                     ) : (
@@ -397,7 +395,7 @@ export default function Debts() {
                   </TableCell>
                   <TableCell>
                     {c.balance_usd > 0 ? (
-                      <span className="text-red-600" style={{ fontWeight: 600 }}>
+                      <span className="text-red-600 font-semibold">
                         {formatCurrency(c.balance_usd, "USD")}
                       </span>
                     ) : (
@@ -481,7 +479,7 @@ export default function Debts() {
               ) : (
                 <>
                   <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                    <p className="text-blue-800 text-sm mb-3" style={{ fontWeight: 600 }}>
+                    <p className="text-blue-800 text-sm mb-3 font-semibold">
                       {language === "fa" ? "مشتری جدید" :
                       language === "ps" ? "نوی پیرودونکی" :
                       "New Customer"}
@@ -653,12 +651,12 @@ export default function Debts() {
                 </Label>
                 <div className="flex gap-2 mt-1">
                   {customer.balance_afn > 0 && (
-                    <span className="text-red-600" style={{ fontWeight: 600 }}>
+                    <span className="text-red-600 font-semibold">
                       {formatCurrency(customer.balance_afn, "AFN")}
                     </span>
                   )}
                   {customer.balance_usd > 0 && (
-                    <span className="text-red-600" style={{ fontWeight: 600 }}>
+                    <span className="text-red-600 font-semibold">
                       {formatCurrency(customer.balance_usd, "USD")}
                     </span>
                   )}

@@ -92,7 +92,7 @@ export function useAuth() {
       supabaseUser: session?.user ?? null,
       shopUser: shopUser ?? null,
       appUser: appUser ?? null,
-      session,
+      session: session ?? null,
       isLoading: !session && shopUser === undefined && appUser === undefined,
     });
   }, [session, shopUser, appUser]);

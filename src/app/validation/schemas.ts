@@ -5,12 +5,12 @@ export const productSchema = z.object({
   name: z.string().min(1, "نام الزامی است").max(200),
   category: z.string().min(1, "دسته‌بندی الزامی است"),
   barcode: z.string().max(100).optional().or(z.literal("")),
-  buy_price_afn: z.number({ invalid_type_error: "عدد وارد کنید" }).min(0),
-  buy_price_usd: z.number({ invalid_type_error: "عدد وارد کنید" }).min(0),
-  sell_price_afn: z.number({ invalid_type_error: "عدد وارد کنید" }).min(0),
-  sell_price_usd: z.number({ invalid_type_error: "عدد وارد کنید" }).min(0),
-  stock: z.number({ invalid_type_error: "عدد وارد کنید" }).int().min(0),
-  min_stock: z.number({ invalid_type_error: "عدد وارد کنید" }).int().min(0),
+  buy_price_afn: z.number().min(0),
+  buy_price_usd: z.number().min(0),
+  sell_price_afn: z.number().min(0),
+  sell_price_usd: z.number().min(0),
+  stock: z.number().int().min(0),
+  min_stock: z.number().int().min(0),
   description: z.string().max(1000).default(""),
 });
 
@@ -83,7 +83,7 @@ export const withdrawalSchema = z.object({
 // ─── Payment ─────────────────────────────────
 export const paymentSchema = z.object({
   customer_id: z.string().uuid("مشتری را انتخاب کنید"),
-  amount: z.number({ invalid_type_error: "عدد وارد کنید" }).min(0.01, "مبلغ باید بیشتر از صفر باشد"),
+  amount: z.number().min(0.01, "مبلغ باید بیشتر از صفر باشد"),
   currency: z.enum(["AFN", "USD"]).default("AFN"),
   note: z.string().max(500).default(""),
 });

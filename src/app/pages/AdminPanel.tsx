@@ -159,7 +159,7 @@ export default function AdminPanel() {
                 <Users className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl text-gray-800" style={{ fontWeight: 700 }}>
+                <h1 className="text-2xl text-gray-800 font-bold">
                   {language === "fa" ? "پنل مدیریت کاربران" : language === "ps" ? "د کاروونکو مدیریت پینل" : "User Management Panel"}
                 </h1>
                 <p className="text-gray-500 text-sm">
@@ -185,7 +185,7 @@ export default function AdminPanel() {
               <Store className="w-8 h-8" />
               <div>
                 <p className="text-blue-100 text-sm">{language === "fa" ? "کل دوکان‌ها" : "Total Shops"}</p>
-                <p className="text-3xl mt-1" style={{ fontWeight: 700 }}>{allShopUsers.length}</p>
+                <p className="text-3xl mt-1 font-bold">{allShopUsers.length}</p>
               </div>
             </div>
           </div>
@@ -194,7 +194,7 @@ export default function AdminPanel() {
               <Users className="w-8 h-8" />
               <div>
                 <p className="text-green-100 text-sm">{language === "fa" ? "فعال" : "Active"}</p>
-                <p className="text-3xl mt-1" style={{ fontWeight: 700 }}>
+                <p className="text-3xl mt-1 font-bold">
                   {allShopUsers.filter(u => u.is_active).length}
                 </p>
               </div>
@@ -205,7 +205,7 @@ export default function AdminPanel() {
               <ShoppingBag className="w-8 h-8" />
               <div>
                 <p className="text-orange-100 text-sm">{language === "fa" ? "غیرفعال" : "Inactive"}</p>
-                <p className="text-3xl mt-1" style={{ fontWeight: 700 }}>
+                <p className="text-3xl mt-1 font-bold">
                   {allShopUsers.filter(u => !u.is_active).length}
                 </p>
               </div>
@@ -339,11 +339,11 @@ export default function AdminPanel() {
                     <TableCell>
                       <div className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                          <span className="text-blue-600 text-sm" style={{ fontWeight: 600 }}>
+                          <span className="text-blue-600 text-sm font-semibold">
                             {user.name.charAt(0).toUpperCase()}
                           </span>
                         </div>
-                        <span style={{ fontWeight: 500 }}>{user.name}</span>
+                        <span className="font-medium">{user.name}</span>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -361,7 +361,7 @@ export default function AdminPanel() {
                     <TableCell>
                       <div className="flex items-center gap-1">
                         <Store className="w-3 h-3 text-purple-500" />
-                        <span className="text-sm" style={{ fontWeight: 500 }}>{user.shop_name}</span>
+                        <span className="text-sm font-medium">{user.shop_name}</span>
                       </div>
                     </TableCell>
                     <TableCell>

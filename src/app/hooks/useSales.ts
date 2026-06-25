@@ -4,7 +4,7 @@
  */
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase, Sale, SaleItem } from '../lib/supabase';
+import { supabase } from '../lib/supabase';
 import { useAuth } from './useAuth';
 
 export function useSales() {

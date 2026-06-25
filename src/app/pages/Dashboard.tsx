@@ -14,12 +14,12 @@ import {
   Calendar,
   PieChart as PieChartIcon,
   Building2,
-  FileDown,
   Download,
 } from "lucide-react";
 import { exportAllDataToExcel } from "../utils/exportAllData";
 import { toast } from "sonner";
 import { Button } from "../components/ui/button";
+import { Progress } from "../components/ui/progress";
 import {
   BarChart,
   Bar,
@@ -200,8 +200,6 @@ export default function Dashboard() {
   const totalPaidUsd = filteredSales.filter((s) => s.currency === "USD").reduce((a, s) => a + s.paid_amount, 0);
 
   // Shareholders calculations
-  const totalInvestmentAfn = shareholders.reduce((a, s) => a + s.investment_amount_afn, 0);
-  const totalInvestmentUsd = shareholders.reduce((a, s) => a + s.investment_amount_usd, 0);
 
   // Total Capital Calculation (Stock Value + Cash Received + Customer Debts)
   const stockValueAfn = products.reduce((total, p) => total + (p.buy_price_afn * p.stock), 0);
@@ -245,7 +243,6 @@ export default function Dashboard() {
   const totalPaid = currency === "AFN" ? totalPaidAfn : totalPaidUsd;
   const totalExpenses = currency === "AFN" ? totalExpensesAfn : totalExpensesUsd;
   const netProfit = currency === "AFN" ? netProfitAfn : netProfitUsd;
-  const totalInvestment = currency === "AFN" ? totalInvestmentAfn : totalInvestmentUsd;
   const totalCapital = currency === "AFN" ? totalCapitalAfn : totalCapitalUsd;
   const stockValue = currency === "AFN" ? stockValueAfn : stockValueUsd;
   const allPaid = currency === "AFN" ? allPaidAfn : allPaidUsd;
@@ -331,7 +328,7 @@ export default function Dashboard() {
         <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
           <div className="flex items-center gap-3">
             <Calendar className="w-5 h-5 text-gray-600" />
-            <h3 className="text-gray-800" style={{ fontWeight: 600 }}>
+            <h3 className="text-gray-800 font-semibold">
               {language === "fa" ? "فلتر زمانی راپور" : "Report Time Filter"}
             </h3>
           </div>
@@ -360,10 +357,9 @@ export default function Dashboard() {
               <button
                 key={filter.value}
                 onClick={() => setDateFilter(filter.value as any)}
-                className={`px-4 py-2 rounded-xl text-sm transition-colors ${
+                className={`px-4 py-2 rounded-xl text-sm transition-colors font-medium ${
                   dateFilter === filter.value ? "bg-blue-500 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
-                style={{ fontWeight: 500 }}
               >
                 {filter.label}
               </button>
@@ -373,8 +369,9 @@ export default function Dashboard() {
           {dateFilter === "custom" && (
             <div className="flex gap-3">
               <div>
-                <label className="block text-xs text-gray-500 mb-1">{language === "fa" ? "از تاریخ" : "From"}</label>
+                <label htmlFor="dashboard-from-date" className="block text-xs text-gray-500 mb-1">{language === "fa" ? "از تاریخ" : "From"}</label>
                 <input
+                  id="dashboard-from-date"
                   type="date"
                   value={customStartDate}
                   onChange={(e) => setCustomStartDate(e.target.value)}
@@ -382,8 +379,9 @@ export default function Dashboard() {
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-500 mb-1">{language === "fa" ? "تا تاریخ" : "To"}</label>
+                <label htmlFor="dashboard-to-date" className="block text-xs text-gray-500 mb-1">{language === "fa" ? "تا تاریخ" : "To"}</label>
                 <input
+                  id="dashboard-to-date"
                   type="date"
                   value={customEndDate}
                   onChange={(e) => setCustomEndDate(e.target.value)}
@@ -405,7 +403,7 @@ export default function Dashboard() {
             <p className="text-violet-100 text-sm mb-1">
               {language === "fa" ? "کل سرمایه" : "Total Capital"}
             </p>
-            <p className="text-4xl" style={{ fontWeight: 700 }}>
+            <p className="text-4xl font-bold">
               {formatCurrency(totalCapital, currency)}
             </p>
           </div>
@@ -419,7 +417,7 @@ export default function Dashboard() {
                 {language === "fa" ? "ارزش موجودی انبار" : "Stock Value"}
               </p>
             </div>
-            <p className="text-xl text-white" style={{ fontWeight: 600 }}>
+            <p className="text-xl text-white font-semibold">
               {formatCurrency(stockValue, currency)}
             </p>
           </div>
@@ -431,7 +429,7 @@ export default function Dashboard() {
                 {language === "fa" ? "پول نقد دریافتی" : "Cash Received"}
               </p>
             </div>
-            <p className="text-xl text-white" style={{ fontWeight: 600 }}>
+            <p className="text-xl text-white font-semibold">
               {formatCurrency(allPaid, currency)}
             </p>
           </div>
@@ -443,7 +441,7 @@ export default function Dashboard() {
                 {language === "fa" ? "طلب از مشتریان" : "Customer Debts"}
               </p>
             </div>
-            <p className="text-xl text-white" style={{ fontWeight: 600 }}>
+            <p className="text-xl text-white font-semibold">
               {formatCurrency(totalDebt, currency)}
             </p>
           </div>
@@ -461,7 +459,7 @@ export default function Dashboard() {
               <p className="text-emerald-100 text-sm mb-1">
                 {language === "fa" ? "عواید خالص (دریافتی)" : "Net Profit (Received)"}
               </p>
-              <p className="text-4xl" style={{ fontWeight: 700 }}>
+              <p className="text-4xl font-bold">
                 {formatCurrency(netProfit, currency)}
               </p>
               <p className="text-emerald-200 text-xs mt-1">
@@ -471,7 +469,7 @@ export default function Dashboard() {
           </div>
           <div className="text-left">
             <p className="text-emerald-100 text-sm mb-1">{language === "fa" ? "از مجموع فروش" : "Out of Total Sales"}</p>
-            <p className="text-xl" style={{ fontWeight: 600 }}>
+            <p className="text-xl font-semibold">
               {formatCurrency(totalPaid, currency)}
             </p>
             <p className="text-emerald-200 text-xs mt-1">
@@ -493,7 +491,7 @@ export default function Dashboard() {
               <ArrowUpRight className="w-4 h-4 text-gray-300" />
             </div>
             <p className="text-gray-500 text-sm mb-1">{stat.label}</p>
-            <p className="text-gray-900 text-xl" style={{ fontWeight: 700 }}>
+            <p className="text-gray-900 text-xl font-bold">
               {stat.value}
             </p>
           </div>
@@ -507,7 +505,7 @@ export default function Dashboard() {
             <Users className="w-8 h-8 text-blue-500" />
             <div>
               <p className="text-gray-500 text-sm">{language === "fa" ? "تعداد مشتریان" : "Total Customers"}</p>
-              <p className="text-2xl" style={{ fontWeight: 700 }}>
+              <p className="text-2xl font-bold">
                 {customers.length}
               </p>
             </div>
@@ -519,7 +517,7 @@ export default function Dashboard() {
             <Package className="w-8 h-8 text-violet-500" />
             <div>
               <p className="text-gray-500 text-sm">{language === "fa" ? "تعداد اجناس" : "Total Products"}</p>
-              <p className="text-2xl" style={{ fontWeight: 700 }}>
+              <p className="text-2xl font-bold">
                 {products.length}
               </p>
             </div>
@@ -531,7 +529,7 @@ export default function Dashboard() {
             <AlertCircle className="w-8 h-8 text-red-500" />
             <div>
               <p className="text-gray-500 text-sm">{language === "fa" ? "قرضه مشتریان" : "Customer Debt"}</p>
-              <p className="text-2xl" style={{ fontWeight: 700 }}>
+              <p className="text-2xl font-bold">
                 {formatCurrency(totalDebt, currency)}
               </p>
             </div>
@@ -543,7 +541,7 @@ export default function Dashboard() {
             <AlertCircle className="w-8 h-8 text-amber-500" />
             <div>
               <p className="text-gray-500 text-sm">{language === "fa" ? "کم موجودی" : "Low Stock"}</p>
-              <p className="text-2xl" style={{ fontWeight: 700 }}>
+              <p className="text-2xl font-bold">
                 {lowStockProducts}
               </p>
             </div>
@@ -557,7 +555,7 @@ export default function Dashboard() {
         <div className="xl:col-span-2 bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
           <div className="flex items-center gap-2 mb-5">
             <TrendingUp className="w-5 h-5 text-blue-500" />
-            <h3 className="text-gray-800" style={{ fontWeight: 600 }}>
+            <h3 className="text-gray-800 font-semibold">
               {language === "fa" ? `فروش ماهانه (${currency === "AFN" ? "افغانی" : "دالر"})` : `Monthly Sales (${currency})`}
             </h3>
           </div>
@@ -569,8 +567,8 @@ export default function Dashboard() {
               <Tooltip
                 key="tooltip"
                 formatter={(v: number) => [formatCurrency(v, currency), language === "fa" ? "فروش" : "Sales"]}
-                labelStyle={{ fontFamily: "Vazirmatn", direction: "rtl" }}
-                contentStyle={{ fontFamily: "Vazirmatn", direction: "rtl" }}
+                wrapperClassName="recharts-tooltip-rtl"
+                labelClassName="recharts-tooltip-label-rtl"
               />
               <Bar key="bar" dataKey="amount" fill="#3b82f6" radius={[6, 6, 0, 0]} />
             </BarChart>
@@ -579,7 +577,7 @@ export default function Dashboard() {
 
         {/* Category Pie Chart */}
         <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-          <h3 className="text-gray-800 mb-5" style={{ fontWeight: 600 }}>
+          <h3 className="text-gray-800 mb-5 font-semibold">
             {language === "fa" ? "دسته‌بندی اجناس" : "Product Categories"}
           </h3>
           <ResponsiveContainer width="100%" height={240}>
@@ -601,7 +599,7 @@ export default function Dashboard() {
               </Pie>
               <Legend
                 key="legend"
-                formatter={(value) => <span style={{ fontFamily: "Vazirmatn", fontSize: 12 }}>{value}</span>}
+                formatter={(value) => <span className="text-[12px]">{value}</span>}
               />
             </PieChart>
           </ResponsiveContainer>
@@ -613,7 +611,7 @@ export default function Dashboard() {
         <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
           <div className="flex items-center gap-2 mb-4">
             <PieChartIcon className="w-5 h-5 text-violet-500" />
-            <h3 className="text-gray-800" style={{ fontWeight: 600 }}>
+            <h3 className="text-gray-800 font-semibold">
               {language === "fa" ? "سهم سهام‌داران از مفاد" : language === "ps" ? "د ونډه لرونکو د ګټې ونډه" : "Shareholder Profit Distribution"}
             </h3>
           </div>
@@ -621,19 +619,19 @@ export default function Dashboard() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-right border-b border-gray-100">
-                  <th className="pb-3 text-gray-500 pr-0" style={{ fontWeight: 500 }}>
+                  <th className="pb-3 text-gray-500 pr-0 font-medium">
                     {language === "fa" ? "نام" : language === "ps" ? "نوم" : "Name"}
                   </th>
-                  <th className="pb-3 text-gray-500" style={{ fontWeight: 500 }}>
+                  <th className="pb-3 text-gray-500 font-medium">
                     {language === "fa" ? "سرمایه (AFN)" : language === "ps" ? "پانګه (؋)" : "Investment (AFN)"}
                   </th>
-                  <th className="pb-3 text-gray-500" style={{ fontWeight: 500 }}>
+                  <th className="pb-3 text-gray-500 font-medium">
                     {language === "fa" ? "سرمایه (USD)" : language === "ps" ? "پانګه ($)" : "Investment (USD)"}
                   </th>
-                  <th className="pb-3 text-gray-500" style={{ fontWeight: 500 }}>
+                  <th className="pb-3 text-gray-500 font-medium">
                     {language === "fa" ? "فیصدی" : language === "ps" ? "سلنه" : "Share %"}
                   </th>
-                  <th className="pb-3 text-gray-500" style={{ fontWeight: 500 }}>
+                  <th className="pb-3 text-gray-500 font-medium">
                     {language === "fa" ? `سهم از مفاد (${currency})` : language === "ps" ? `د ګټې ونډه (${currency})` : `Profit Share (${currency})`}
                   </th>
                 </tr>
@@ -641,13 +639,13 @@ export default function Dashboard() {
               <tbody className="divide-y divide-gray-50">
                 {shareholderShares.map((sh) => (
                   <tr key={sh.shareholder_id} className="hover:bg-gray-50 transition-colors">
-                    <td className="py-3 text-gray-800 pr-0" style={{ fontWeight: 500 }}>
+                    <td className="py-3 text-gray-800 pr-0 font-medium">
                       {sh.name}
                     </td>
                     <td className="py-3 text-gray-600">{formatCurrency(sh.investment_amount_afn, "AFN")}</td>
                     <td className="py-3 text-gray-600">{formatCurrency(sh.investment_amount_usd, "USD")}</td>
                     <td className="py-3 text-gray-800">{sh.share_percentage}%</td>
-                    <td className="py-3 text-emerald-600" style={{ fontWeight: 600 }}>
+                    <td className="py-3 text-emerald-600 font-semibold">
                       {formatCurrency(currency === "AFN" ? sh.shareAfn : sh.shareUsd, currency)}
                     </td>
                   </tr>
@@ -663,7 +661,7 @@ export default function Dashboard() {
         <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
           <div className="flex items-center gap-2 mb-4">
             <Building2 className="w-5 h-5 text-indigo-500" />
-            <h3 className="text-gray-800" style={{ fontWeight: 600 }}>
+            <h3 className="text-gray-800 font-semibold">
               {language === "fa" ? "وضعیت سپلایرها" : language === "ps" ? "د عرضه کوونکو حالت" : "Supplier Overview"}
             </h3>
           </div>
@@ -672,11 +670,11 @@ export default function Dashboard() {
             <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Building2 className="w-5 h-5 text-indigo-600" />
-                <p className="text-indigo-700 text-sm" style={{ fontWeight: 500 }}>
+                <p className="text-indigo-700 text-sm font-medium">
                   {language === "fa" ? "تعداد سپلایرها" : language === "ps" ? "د عرضه کوونکو شمیر" : "Total Suppliers"}
                 </p>
               </div>
-              <p className="text-2xl text-indigo-900" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-indigo-900 font-bold">
                 {suppliers.length}
               </p>
             </div>
@@ -684,11 +682,11 @@ export default function Dashboard() {
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-2">
                 <ShoppingCart className="w-5 h-5 text-blue-600" />
-                <p className="text-blue-700 text-sm" style={{ fontWeight: 500 }}>
+                <p className="text-blue-700 text-sm font-medium">
                   {language === "fa" ? "کل خریداری" : language === "ps" ? "ټول پیرودنه" : "Total Purchases"}
                 </p>
               </div>
-              <p className="text-2xl text-blue-900" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-blue-900 font-bold">
                 {formatCurrency(totalSupplierPurchases, currency)}
               </p>
             </div>
@@ -696,11 +694,11 @@ export default function Dashboard() {
             <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-2">
                 <DollarSign className="w-5 h-5 text-emerald-600" />
-                <p className="text-emerald-700 text-sm" style={{ fontWeight: 500 }}>
+                <p className="text-emerald-700 text-sm font-medium">
                   {language === "fa" ? "کل پرداخت‌ها" : language === "ps" ? "ټول تادیات" : "Total Payments"}
                 </p>
               </div>
-              <p className="text-2xl text-emerald-900" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-emerald-900 font-bold">
                 {formatCurrency(totalSupplierPayments, currency)}
               </p>
             </div>
@@ -708,11 +706,11 @@ export default function Dashboard() {
             <div className="bg-gradient-to-br from-rose-50 to-rose-100 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-2">
                 <AlertCircle className="w-5 h-5 text-rose-600" />
-                <p className="text-rose-700 text-sm" style={{ fontWeight: 500 }}>
+                <p className="text-rose-700 text-sm font-medium">
                   {language === "fa" ? "بدهی باقی‌مانده" : language === "ps" ? "پاتې پور" : "Remaining Debt"}
                 </p>
               </div>
-              <p className="text-2xl text-rose-900" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-rose-900 font-bold">
                 {formatCurrency(totalSupplierDebt, currency)}
               </p>
             </div>
@@ -721,7 +719,7 @@ export default function Dashboard() {
           {/* Payment Status Bar */}
           <div className="bg-gray-50 rounded-xl p-4">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-gray-700 text-sm" style={{ fontWeight: 500 }}>
+              <p className="text-gray-700 text-sm font-medium">
                 {language === "fa" ? "وضعیت پرداخت‌ها" : language === "ps" ? "د تادیاتو حالت" : "Payment Status"}
               </p>
               <p className="text-gray-600 text-sm">
@@ -732,11 +730,9 @@ export default function Dashboard() {
               </p>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-              <div
-                className="bg-gradient-to-r from-emerald-500 to-emerald-600 h-full rounded-full transition-all duration-300"
-                style={{
-                  width: `${totalSupplierPurchases > 0 ? (totalSupplierPayments / totalSupplierPurchases) * 100 : 0}%`,
-                }}
+              <Progress
+                value={totalSupplierPurchases > 0 ? Math.round((totalSupplierPayments / totalSupplierPurchases) * 100) : 0}
+                className="h-3 rounded-full bg-gray-200"
               />
             </div>
           </div>
@@ -745,23 +741,23 @@ export default function Dashboard() {
 
       {/* Recent Sales Table */}
       <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-        <h3 className="text-gray-800 mb-4" style={{ fontWeight: 600 }}>
+        <h3 className="text-gray-800 mb-4 font-semibold">
           {language === "fa" ? "آخرین فروش‌ها" : "Recent Sales"}
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="text-right border-b border-gray-100">
-                <th className="pb-3 text-gray-500 pr-0" style={{ fontWeight: 500 }}>
+                <th className="pb-3 text-gray-500 pr-0 font-medium">
                   {language === "fa" ? "مشتری" : "Customer"}
                 </th>
-                <th className="pb-3 text-gray-500" style={{ fontWeight: 500 }}>
+                <th className="pb-3 text-gray-500 font-medium">
                   {language === "fa" ? "تاریخ" : "Date"}
                 </th>
-                <th className="pb-3 text-gray-500" style={{ fontWeight: 500 }}>
+                <th className="pb-3 text-gray-500 font-medium">
                   {language === "fa" ? "مبلغ کل" : "Total"}
                 </th>
-                <th className="pb-3 text-gray-500" style={{ fontWeight: 500 }}>
+                <th className="pb-3 text-gray-500 font-medium">
                   {language === "fa" ? "وضعیت" : "Status"}
                 </th>
               </tr>
@@ -771,7 +767,7 @@ export default function Dashboard() {
                 const customer = customers.find((c) => c.customer_id === sale.customer_id);
                 return (
                   <tr key={sale.sale_id} className="hover:bg-gray-50 transition-colors">
-                    <td className="py-3 text-gray-800 pr-0" style={{ fontWeight: 500 }}>
+                    <td className="py-3 text-gray-800 pr-0 font-medium">
                       {customer?.name || (language === "fa" ? "نامشخص" : "Unknown")}
                     </td>
                     <td className="py-3 text-gray-500">{sale.date}</td>
@@ -779,13 +775,12 @@ export default function Dashboard() {
                     <td className="py-3">
                       {sale.remaining_amount === 0 ? (
                         <span
-                          className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-xs"
-                          style={{ fontWeight: 500 }}
+                          className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-xs font-medium"
                         >
                           {language === "fa" ? "پرداخت شده" : "Paid"}
                         </span>
                       ) : (
-                        <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs" style={{ fontWeight: 500 }}>
+                        <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-medium">
                           {formatCurrency(sale.remaining_amount, sale.currency)} {language === "fa" ? "باقی" : "remaining"}
                         </span>
                       )}

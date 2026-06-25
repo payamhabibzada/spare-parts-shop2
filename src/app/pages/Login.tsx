@@ -16,7 +16,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [selectedShop, setSelectedShop] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [showShopSelection, setShowShopSelection] = useState(!currentShopUser && allShopUsers.length > 0);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +48,7 @@ export default function Login() {
           <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Store className="w-9 h-9 text-white" />
           </div>
-          <h1 className="text-gray-800 text-2xl mb-1" style={{ fontWeight: 700 }}>
+          <h1 className="text-gray-800 text-2xl mb-1 font-bold">
             {currentShopUser ? currentShopUser.shop_name : "سیستم مدیریت دوکانداری"}
           </h1>
           <p className="text-gray-500 text-sm">ورود کاربر</p>
@@ -82,7 +81,6 @@ export default function Login() {
                     const shop = allShopUsers.find(s => s.shop_user_id === shopId);
                     if (shop) {
                       loginShopUser(shop.email, shop.password);
-                      setShowShopSelection(false);
                       toast.success(`متصل به دوکان: ${shop.shop_name}`);
                     }
                   }}

@@ -86,6 +86,8 @@ export function exportAllDataToExcel(params: ExportAllDataParams) {
     [],
     [isFa ? 'کل قرضه‌ها (افغانی):' : 'Total Debts (AFN):', customers.reduce((sum, c) => sum + c.balance_afn, 0)],
     [isFa ? 'کل قرضه‌ها (دالر):' : 'Total Debts (USD):', customers.reduce((sum, c) => sum + c.balance_usd, 0)],
+    [isFa ? 'تعداد خریدهای تامین‌کننده:' : 'Supplier Purchases:', supplierPurchases.length],
+    [isFa ? 'تعداد پرداخت‌های تامین‌کننده:' : 'Supplier Payments:', supplierPayments.length],
   ];
   const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
   XLSX.utils.book_append_sheet(workbook, summarySheet, isFa ? 'خلاصه' : 'Summary');

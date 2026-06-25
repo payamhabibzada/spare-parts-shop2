@@ -132,7 +132,7 @@ export default function Suppliers() {
                 language === "ps" ? "د عرضه کوونکو شمیر" :
                 "Total Suppliers"}
               </p>
-              <p className="text-2xl mt-1" style={{ fontWeight: 700 }}>
+              <p className="text-2xl mt-1 font-bold">
                 {suppliersCount}
               </p>
             </div>
@@ -148,7 +148,7 @@ export default function Suppliers() {
                 language === "ps" ? "ټول پور (افغانۍ)" :
                 "Total Debt (AFN)"}
               </p>
-              <p className="text-2xl mt-1" style={{ fontWeight: 700 }}>
+              <p className="text-2xl mt-1 font-bold">
                 {formatCurrency(totalDebtAfn, "AFN")}
               </p>
             </div>
@@ -164,7 +164,7 @@ export default function Suppliers() {
                 language === "ps" ? "ټول پور (ډالر)" :
                 "Total Debt (USD)"}
               </p>
-              <p className="text-2xl mt-1" style={{ fontWeight: 700 }}>
+              <p className="text-2xl mt-1 font-bold">
                 {formatCurrency(totalDebtUsd, "USD")}
               </p>
             </div>
@@ -271,7 +271,7 @@ export default function Suppliers() {
             ) : (
               filteredSuppliers.map((supplier) => (
                 <TableRow key={supplier.supplier_id}>
-                  <TableCell style={{ fontWeight: 500 }}>{supplier.name}</TableCell>
+                  <TableCell className="font-medium">{supplier.name}</TableCell>
                   <TableCell className="text-gray-600">
                     <div className="flex items-center gap-2">
                       <Building2 className="w-4 h-4 text-blue-500" />
@@ -281,7 +281,7 @@ export default function Suppliers() {
                   <TableCell className="text-gray-600">{supplier.phone || "-"}</TableCell>
                   <TableCell>
                     {supplier.balance_afn > 0 ? (
-                      <span className="text-rose-600" style={{ fontWeight: 600 }}>
+                      <span className="text-rose-600 font-semibold">
                         {formatCurrency(supplier.balance_afn, "AFN")}
                       </span>
                     ) : (
@@ -290,7 +290,7 @@ export default function Suppliers() {
                   </TableCell>
                   <TableCell>
                     {supplier.balance_usd > 0 ? (
-                      <span className="text-rose-600" style={{ fontWeight: 600 }}>
+                      <span className="text-rose-600 font-semibold">
                         {formatCurrency(supplier.balance_usd, "USD")}
                       </span>
                     ) : (

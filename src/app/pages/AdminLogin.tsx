@@ -50,7 +50,7 @@ export default function AdminLogin() {
           <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
             <Shield className="w-9 h-9 text-white" />
           </div>
-          <h1 className="text-gray-800 text-2xl mb-1" style={{ fontWeight: 700 }}>
+          <h1 className="text-gray-800 text-2xl mb-1 font-bold">
             {language === "fa" ? "پنل مدیریت سوپر ادمین" : "Super Admin Panel"}
           </h1>
           <p className="text-gray-500 text-sm">

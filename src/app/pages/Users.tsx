@@ -123,7 +123,7 @@ export default function Users() {
     return (
       <div className="bg-white rounded-xl p-8 text-center">
         <Shield className="w-16 h-16 text-red-400 mx-auto mb-4" />
-        <h2 className="text-xl mb-2 text-gray-800" style={{ fontWeight: 600 }}>
+        <h2 className="text-xl mb-2 text-gray-800 font-semibold">
           {language === "fa" ? "دسترسی محدود" : "Access Restricted"}
         </h2>
         <p className="text-gray-500">
@@ -240,7 +240,7 @@ export default function Users() {
       role === "super_admin" ? (language === "fa" ? "سوپر ادمین" : "Super Admin") :
       role === "admin" ? (language === "fa" ? "ادمین" : "Admin") :
       (language === "fa" ? "کاربر" : "User");
-    return <span className={`${classes} px-2.5 py-1 rounded-full text-xs`} style={{ fontWeight: 500 }}>{label}</span>;
+    return <span className={`${classes} px-2.5 py-1 rounded-full text-xs`} className="font-medium">{label}</span>;
   };
 
   // Filtered activity logs
@@ -272,7 +272,7 @@ export default function Users() {
           }`}
         >
           <UsersIcon className="w-4 h-4" />
-          <span style={{ fontWeight: 500 }}>{language === "fa" ? "کاربران" : "Users"}</span>
+          <span className="font-medium">{language === "fa" ? "کاربران" : "Users"}</span>
         </button>
         <button
           onClick={() => setActiveTab("activity")}
@@ -283,7 +283,7 @@ export default function Users() {
           }`}
         >
           <Activity className="w-4 h-4" />
-          <span style={{ fontWeight: 500 }}>{language === "fa" ? "لاگ فعالیت" : "Activity Log"}</span>
+          <span className="font-medium">{language === "fa" ? "لاگ فعالیت" : "Activity Log"}</span>
           {activityLogs.length > 0 && (
             <span className={`text-xs px-1.5 py-0.5 rounded-full ${activeTab === "activity" ? "bg-white/20" : "bg-gray-200 text-gray-600"}`}>
               {activityLogs.length}
@@ -390,7 +390,7 @@ export default function Users() {
                     >
                       <div className="flex items-center gap-2">
                         <Shield className="w-4 h-4 text-blue-500" />
-                        <span className="text-sm text-gray-700" style={{ fontWeight: 600 }}>
+                        <span className="text-sm text-gray-700 font-semibold">
                           {language === "fa" ? "سطح دسترسی" : "Permissions"}
                         </span>
                         <span className="text-xs text-gray-500">
@@ -415,8 +415,7 @@ export default function Users() {
                               <button
                                 type="button"
                                 onClick={handleSelectAll}
-                                className="text-xs text-blue-600 hover:text-blue-700"
-                                style={{ fontWeight: 500 }}
+                                className="text-xs text-blue-600 hover:text-blue-700 font-medium"
                               >
                                 {selectedPermissions.length === ALL_PERMISSIONS.length
                                   ? (language === "fa" ? "لغو همه" : "Deselect All")
@@ -442,7 +441,7 @@ export default function Users() {
                                       ? <CheckSquare className="w-4 h-4 text-blue-500 flex-shrink-0" />
                                       : <Square className="w-4 h-4 text-gray-300 flex-shrink-0" />}
                                     <PermIcon className={`w-3.5 h-3.5 flex-shrink-0 ${checked ? "text-blue-500" : "text-gray-400"}`} />
-                                    <span className={`text-xs flex-1 ${checked ? "text-blue-700" : "text-gray-600"}`} style={{ fontWeight: checked ? 600 : 400 }}>
+                                    <span className={`text-xs flex-1 ${checked ? "text-blue-700 font-semibold" : "text-gray-600 font-normal"}`}>
                                       {language === "fa" ? perm.fa : perm.en}
                                     </span>
                                   </button>
@@ -474,7 +473,7 @@ export default function Users() {
                 </div>
                 <div>
                   <p className="text-gray-500 text-sm">{language === "fa" ? "کل کاربران" : "Total Users"}</p>
-                  <p className="text-2xl text-gray-800" style={{ fontWeight: 700 }}>{users.length}</p>
+                  <p className="text-2xl text-gray-800 font-bold">{users.length}</p>
                 </div>
               </div>
             </div>
@@ -485,7 +484,7 @@ export default function Users() {
                 </div>
                 <div>
                   <p className="text-gray-500 text-sm">{language === "fa" ? "کاربران فعال" : "Active Users"}</p>
-                  <p className="text-2xl text-gray-800" style={{ fontWeight: 700 }}>{users.filter(u => u.is_active).length}</p>
+                  <p className="text-2xl text-gray-800 font-bold">{users.filter(u => u.is_active).length}</p>
                 </div>
               </div>
             </div>
@@ -496,7 +495,7 @@ export default function Users() {
                 </div>
                 <div>
                   <p className="text-gray-500 text-sm">{language === "fa" ? "ادمین‌ها" : "Admins"}</p>
-                  <p className="text-2xl text-gray-800" style={{ fontWeight: 700 }}>
+                  <p className="text-2xl text-gray-800 font-bold">
                     {users.filter(u => u.role === "super_admin" || u.role === "admin").length}
                   </p>
                 </div>
@@ -520,16 +519,16 @@ export default function Users() {
               <TableBody>
                 {users.map((user) => (
                   <TableRow key={user.user_id} className="hover:bg-gray-50">
-                    <TableCell style={{ fontWeight: 500 }}>{user.full_name}</TableCell>
+                    <TableCell className="font-medium">{user.full_name}</TableCell>
                     <TableCell className="font-mono text-sm text-gray-600">{user.email || user.username}</TableCell>
                     <TableCell>{getRoleBadge(user.role)}</TableCell>
                     <TableCell>
                       {user.permissions.includes("*") ? (
-                        <span className="text-xs text-purple-600 bg-purple-50 px-2 py-1 rounded-full" style={{ fontWeight: 500 }}>
+                        <span className="text-xs text-purple-600 bg-purple-50 px-2 py-1 rounded-full font-medium">
                           {language === "fa" ? "دسترسی کامل" : "Full Access"}
                         </span>
                       ) : user.permissions.length === 0 ? (
-                        <span className="text-xs text-red-500 bg-red-50 px-2 py-1 rounded-full" style={{ fontWeight: 500 }}>
+                        <span className="text-xs text-red-500 bg-red-50 px-2 py-1 rounded-full font-medium">
                           {language === "fa" ? "بدون دسترسی" : "No Access"}
                         </span>
                       ) : (
@@ -557,7 +556,7 @@ export default function Users() {
                           onCheckedChange={() => toggleUserStatus(user)}
                           disabled={user.user_id === currentUser?.user_id}
                         />
-                        <span className={`text-xs ${user.is_active ? "text-green-600" : "text-red-500"}`} style={{ fontWeight: 500 }}>
+                        <span className={`text-xs ${user.is_active ? "text-green-600" : "text-red-500"}`} className="font-medium">
                           {user.is_active
                             ? (language === "fa" ? "فعال" : "Active")
                             : (language === "fa" ? "غیرفعال" : "Inactive")}
@@ -600,7 +599,7 @@ export default function Users() {
           <div className="bg-white rounded-xl border border-gray-200 p-4">
             <div className="flex items-center gap-2 mb-3">
               <Filter className="w-4 h-4 text-gray-400" />
-              <span className="text-sm text-gray-600" style={{ fontWeight: 600 }}>
+              <span className="text-sm text-gray-600 font-semibold">
                 {language === "fa" ? "فیلترها" : "Filters"}
               </span>
             </div>
@@ -719,24 +718,24 @@ export default function Users() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap mb-1">
-                          <span className="text-sm text-gray-800" style={{ fontWeight: 600 }}>{log.full_name}</span>
+                          <span className="text-sm text-gray-800 font-semibold">{log.full_name}</span>
                           <span className="text-gray-400 text-xs">({log.username})</span>
-                          <span className={`text-xs px-2 py-0.5 rounded-full ${actionInfo?.color || "bg-gray-100 text-gray-600"}`} style={{ fontWeight: 500 }}>
+                          <span className={`text-xs px-2 py-0.5 rounded-full ${actionInfo?.color || "bg-gray-100 text-gray-600"}`} className="font-medium">
                             {language === "fa" ? actionInfo?.fa : actionInfo?.en}
                           </span>
-                          <span className={`text-xs px-2 py-0.5 rounded-full ${entityInfo?.color || "bg-gray-100 text-gray-600"}`} style={{ fontWeight: 500 }}>
+                          <span className={`text-xs px-2 py-0.5 rounded-full ${entityInfo?.color || "bg-gray-100 text-gray-600"}`} className="font-medium">
                             {language === "fa" ? entityInfo?.fa : (entityInfo?.en || log.entity)}
                           </span>
                         </div>
                         <p className="text-sm text-gray-600">{log.description}</p>
-                        <p className="text-xs text-gray-400 mt-0.5" style={{ fontWeight: 500 }}>{log.entity_name}</p>
+                        <p className="text-xs text-gray-400 mt-0.5 font-medium">{log.entity_name}</p>
                         {/* Before / After data */}
                         {(log.before_data || log.after_data) && log.action === "edit" && (
                           <div className="mt-2 grid grid-cols-2 gap-2">
                             {log.before_data && (
                               <div className="bg-red-50 border border-red-100 rounded-lg px-2 py-1.5 text-xs">
-                                <p className="text-red-500 mb-1" style={{ fontWeight: 600 }}>{language === "fa" ? "قبل از تغییر:" : "Before:"}</p>
-                                <pre className="text-gray-600 whitespace-pre-wrap break-all text-xs leading-relaxed" style={{ fontFamily: "inherit" }}>
+                                <p className="text-red-500 mb-1 font-semibold">{language === "fa" ? "قبل از تغییر:" : "Before:"}</p>
+                                <pre className="text-gray-600 whitespace-pre-wrap break-all text-xs leading-relaxed" >
                                   {(() => {
                                     try {
                                       const obj = JSON.parse(log.before_data!);
@@ -749,8 +748,8 @@ export default function Users() {
                             )}
                             {log.after_data && (
                               <div className="bg-green-50 border border-green-100 rounded-lg px-2 py-1.5 text-xs">
-                                <p className="text-green-500 mb-1" style={{ fontWeight: 600 }}>{language === "fa" ? "بعد از تغییر:" : "After:"}</p>
-                                <pre className="text-gray-600 whitespace-pre-wrap break-all text-xs leading-relaxed" style={{ fontFamily: "inherit" }}>
+                                <p className="text-green-500 mb-1 font-semibold">{language === "fa" ? "بعد از تغییر:" : "After:"}</p>
+                                <pre className="text-gray-600 whitespace-pre-wrap break-all text-xs leading-relaxed" >
                                   {(() => {
                                     try {
                                       const obj = JSON.parse(log.after_data!);

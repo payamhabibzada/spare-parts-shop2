@@ -104,7 +104,7 @@ export default function Categories() {
       {/* Header */}
       <div className="flex flex-wrap items-center gap-3 justify-between">
         <div>
-          <h2 className="text-gray-900 text-xl mb-1" style={{ fontWeight: 700 }}>
+          <h2 className="text-gray-900 text-xl mb-1 font-bold">
             {language === "fa" ? "مدیریت دسته‌بندی‌ها" : "Manage Categories"}
           </h2>
           <p className="text-gray-500 text-sm">
@@ -170,7 +170,7 @@ export default function Categories() {
             <Tags className="w-8 h-8 text-blue-500" />
             <div>
               <p className="text-gray-500 text-sm">{language === "fa" ? "کل دسته‌بندی‌ها" : "Total Categories"}</p>
-              <p className="text-2xl" style={{ fontWeight: 700 }}>{categories.length}</p>
+              <p className="text-2xl font-bold">{categories.length}</p>
             </div>
           </div>
         </div>
@@ -179,7 +179,7 @@ export default function Categories() {
             <Package className="w-8 h-8 text-green-500" />
             <div>
               <p className="text-gray-500 text-sm">{language === "fa" ? "کل اجناس" : "Total Products"}</p>
-              <p className="text-2xl" style={{ fontWeight: 700 }}>{products.length}</p>
+              <p className="text-2xl font-bold">{products.length}</p>
             </div>
           </div>
         </div>
@@ -188,7 +188,7 @@ export default function Categories() {
             <Package className="w-8 h-8 text-purple-500" />
             <div>
               <p className="text-gray-500 text-sm">{language === "fa" ? "میانگین اجناس / دسته" : "Avg Products/Category"}</p>
-              <p className="text-2xl" style={{ fontWeight: 700 }}>
+              <p className="text-2xl font-bold">
                 {categories.length > 0 ? Math.round(products.length / categories.length) : 0}
               </p>
             </div>
@@ -218,11 +218,11 @@ export default function Categories() {
             ) : (
               categories.map((cat) => (
                 <TableRow key={cat.category_id}>
-                  <TableCell style={{ fontWeight: 500 }}>{cat.name_fa}</TableCell>
-                  <TableCell className="text-gray-600">{cat.name_en}</TableCell>
-                  <TableCell className="text-gray-600 text-sm">{cat.description || "-"}</TableCell>
-                  <TableCell>
-                    <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-md text-sm" style={{ fontWeight: 500 }}>
+                    <TableCell className="font-medium">{cat.name_fa}</TableCell>
+                    <TableCell className="text-gray-600">{cat.name_en}</TableCell>
+                    <TableCell className="text-gray-600 text-sm">{cat.description || "-"}</TableCell>
+                    <TableCell>
+                      <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-md text-sm font-medium">
                       {getCategoryProductCount(cat.name_fa)} {language === "fa" ? "جنس" : "items"}
                     </span>
                   </TableCell>
@@ -280,7 +280,7 @@ export default function Categories() {
                   </Button>
                 </div>
               </div>
-              <h3 className="text-gray-800 mb-1" style={{ fontWeight: 600 }}>
+              <h3 className="text-gray-800 mb-1 font-semibold">
                 {language === "fa" ? cat.name_fa : cat.name_en}
               </h3>
               <p className="text-gray-500 text-xs mb-3 line-clamp-2">{cat.description || "-"}</p>

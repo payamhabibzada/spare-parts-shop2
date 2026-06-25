@@ -69,6 +69,10 @@ function ChartContainer({
   );
 }
 
+function normalizeChartKey(key: string | number) {
+  return String(key).replace(/[^a-zA-Z0-9_-]/g, "-").toLowerCase();
+}
+
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
     ([, config]) => config.theme || config.color,
@@ -82,20 +86,39 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     <style
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
+          .map(([theme, prefix]) => {
+            const themeStyles = colorConfig
+              .map(([key, itemConfig]) => {
+                const color =
+                  itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
+                  itemConfig.color;
+                if (!color) {
+                  return null;
+                }
+
+                const safeKey = normalizeChartKey(key);
+                return `  --color-${safeKey}: ${color};`;
+              })
+              .filter(Boolean)
+              .join("\n");
+
+            const legendStyles = colorConfig
+              .map(([key]) => {
+                const safeKey = normalizeChartKey(key);
+                return `
+${prefix} [data-chart=${id}] .chart-legend-color-${safeKey} {
+  --chart-legend-color: var(--color-${safeKey});
+}`;
+              })
+              .join("\n");
+
+            return `
 ${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
-      itemConfig.color;
-    return color ? `  --color-${key}: ${color};` : null;
-  })
-  .join("\n")}
+${themeStyles}
 }
-`,
-          )
+${legendStyles}
+`;
+          })
           .join("\n"),
       }}
     />
@@ -202,7 +225,7 @@ function ChartTooltipContent({
                     !hideIndicator && (
                       <div
                         className={cn(
-                          "shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)",
+                          "shrink-0 rounded-[2px] border-[1px]",
                           {
                             "h-2.5 w-2.5": indicator === "dot",
                             "w-1": indicator === "line",
@@ -210,13 +233,9 @@ function ChartTooltipContent({
                               indicator === "dashed",
                             "my-0.5": nestLabel && indicator === "dashed",
                           },
+                          indicatorColor && "border-[var(--chart-legend-color)] bg-[var(--chart-legend-color)]",
                         )}
-                        style={
-                          {
-                            "--color-bg": indicatorColor,
-                            "--color-border": indicatorColor,
-                          } as React.CSSProperties
-                        }
+                        data-color={indicatorColor}
                       />
                     )
                   )}
@@ -290,10 +309,10 @@ function ChartLegendContent({
               <itemConfig.icon />
             ) : (
               <div
-                className="h-2 w-2 shrink-0 rounded-[2px]"
-                style={{
-                  backgroundColor: item.color,
-                }}
+                className={cn(
+                  "h-2 w-2 shrink-0 rounded-[2px]",
+                  `chart-legend-color-${normalizeChartKey(key)}`,
+                )}
               />
             )}
             {itemConfig?.label}

@@ -9,7 +9,6 @@ import {
   FileText,
   Eye,
   Printer,
-  UserPlus,
   Camera,
 } from "lucide-react";
 import BarcodeScanner from "../components/BarcodeScanner";
@@ -21,7 +20,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../components/ui/dialog";
 import { toast } from "sonner";
 import { printThermalReceipt } from "../utils/exportUtils";
@@ -303,25 +301,25 @@ export default function Sales() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr className="text-right">
-                <th className="px-4 py-3 text-gray-500" style={{ fontWeight: 500 }}>
+                <th className="px-4 py-3 text-gray-500 font-medium">
                   {language === "fa" ? "شماره" : "#"}
                 </th>
-                <th className="px-4 py-3 text-gray-500" style={{ fontWeight: 500 }}>
+                <th className="px-4 py-3 text-gray-500 font-medium">
                   {language === "fa" ? "مشتری" : "Customer"}
                 </th>
-                <th className="px-4 py-3 text-gray-500 hidden sm:table-cell" style={{ fontWeight: 500 }}>
+                <th className="px-4 py-3 text-gray-500 hidden sm:table-cell font-medium">
                   {language === "fa" ? "تاریخ" : "Date"}
                 </th>
-                <th className="px-4 py-3 text-gray-500" style={{ fontWeight: 500 }}>
+                <th className="px-4 py-3 text-gray-500 font-medium">
                   {language === "fa" ? "ارز" : "Currency"}
                 </th>
-                <th className="px-4 py-3 text-gray-500" style={{ fontWeight: 500 }}>
+                <th className="px-4 py-3 text-gray-500 font-medium">
                   {language === "fa" ? "مبلغ کل" : "Total"}
                 </th>
-                <th className="px-4 py-3 text-gray-500" style={{ fontWeight: 500 }}>
+                <th className="px-4 py-3 text-gray-500 font-medium">
                   {language === "fa" ? "باقی‌مانده" : "Remaining"}
                 </th>
-                <th className="px-4 py-3 text-gray-500 text-center" style={{ fontWeight: 500 }}>
+                <th className="px-4 py-3 text-gray-500 text-center font-medium">
                   {language === "fa" ? "عملیات" : "Actions"}
                 </th>
               </tr>
@@ -340,27 +338,27 @@ export default function Sales() {
                   return (
                     <tr key={sale.sale_id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-4 py-3">
-                        <span className="bg-blue-50 text-blue-600 px-2 py-0.5 rounded text-xs" style={{ fontWeight: 600 }}>
+                        <span className="bg-blue-50 text-blue-600 px-2 py-0.5 rounded text-xs font-semibold">
                           #{sale.sale_id.split("_")[0].replace(/\D/g, "").slice(0, 6)}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-gray-800" style={{ fontWeight: 500 }}>
+                      <td className="px-4 py-3 text-gray-800 font-medium">
                         {customer?.name || "Unknown"}
                       </td>
                       <td className="px-4 py-3 text-gray-500 hidden sm:table-cell">{sale.date}</td>
                       <td className="px-4 py-3">
                         <span className="text-xs bg-gray-100 px-2 py-0.5 rounded">{sale.currency}</span>
                       </td>
-                      <td className="px-4 py-3 text-gray-800" style={{ fontWeight: 500 }}>
+                      <td className="px-4 py-3 text-gray-800 font-medium">
                         {formatCurrency(sale.total_amount, sale.currency)}
                       </td>
                       <td className="px-4 py-3">
                         {sale.remaining_amount === 0 ? (
-                          <span className="bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full text-xs" style={{ fontWeight: 500 }}>
+                          <span className="bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full text-xs font-medium">
                             {language === "fa" ? "تسویه" : "Paid"}
                           </span>
                         ) : (
-                          <span className="text-red-500" style={{ fontWeight: 600 }}>
+                          <span className="text-red-500 font-semibold">
                             {formatCurrency(sale.remaining_amount, sale.currency)}
                           </span>
                         )}
@@ -421,20 +419,20 @@ export default function Sales() {
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-gray-50 rounded-xl p-3">
                   <p className="text-gray-400 text-xs mb-1">{language === "fa" ? "مشتری" : "Customer"}</p>
-                  <p className="text-gray-800" style={{ fontWeight: 600 }}>
+                  <p className="text-gray-800 font-semibold">
                     {getCustomerById(selectedSale.customer_id)?.name}
                   </p>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-3">
                   <p className="text-gray-400 text-xs mb-1">{language === "fa" ? "تاریخ" : "Date"}</p>
-                  <p className="text-gray-800" style={{ fontWeight: 600 }}>
+                  <p className="text-gray-800 font-semibold">
                     {selectedSale.date}
                   </p>
                 </div>
               </div>
 
               <div>
-                <h4 className="text-gray-700 mb-2 text-sm" style={{ fontWeight: 600 }}>
+                <h4 className="text-gray-700 mb-2 text-sm font-semibold">
                   {language === "fa" ? "اقلام فاکتور" : "Items"}
                 </h4>
                 <div className="space-y-2">
@@ -443,14 +441,14 @@ export default function Sales() {
                     return (
                       <div key={item.id} className="flex justify-between items-center bg-gray-50 rounded-xl p-3 text-sm">
                         <div>
-                          <p className="text-gray-800" style={{ fontWeight: 500 }}>
+                          <p className="text-gray-800 font-medium">
                             {product?.name || "Unknown"}
                           </p>
                           <p className="text-gray-400 text-xs">
                             {item.quantity} × {formatCurrency(item.price, selectedSale.currency)}
                           </p>
                         </div>
-                        <p className="text-gray-800" style={{ fontWeight: 600 }}>
+                        <p className="text-gray-800 font-semibold">
                           {formatCurrency(item.quantity * item.price, selectedSale.currency)}
                         </p>
                       </div>
@@ -464,13 +462,13 @@ export default function Sales() {
                   <>
                     <div className="flex justify-between">
                       <span className="text-gray-500">{language === "fa" ? "مجموع قبل از تخفیف:" : "Subtotal:"}</span>
-                      <span className="text-gray-800" style={{ fontWeight: 600 }}>
+                      <span className="text-gray-800 font-semibold">
                         {formatCurrency(selectedSale.total_amount + selectedSale.discount, selectedSale.currency)}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-500">{language === "fa" ? "تخفیف:" : "Discount:"}</span>
-                      <span className="text-red-600" style={{ fontWeight: 600 }}>
+                      <span className="text-red-600 font-semibold">
                         -{formatCurrency(selectedSale.discount, selectedSale.currency)}
                       </span>
                     </div>
@@ -478,13 +476,13 @@ export default function Sales() {
                 )}
                 <div className="flex justify-between">
                   <span className="text-gray-500">{language === "fa" ? "مبلغ کل:" : "Total:"}</span>
-                  <span className="text-gray-800" style={{ fontWeight: 600 }}>
+                  <span className="text-gray-800 font-semibold">
                     {formatCurrency(selectedSale.total_amount, selectedSale.currency)}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-500">{language === "fa" ? "پرداخت شده:" : "Paid:"}</span>
-                  <span className="text-emerald-600" style={{ fontWeight: 600 }}>
+                  <span className="text-emerald-600 font-semibold">
                     {formatCurrency(selectedSale.paid_amount, selectedSale.currency)}
                   </span>
                 </div>
@@ -492,7 +490,7 @@ export default function Sales() {
                   <span className="text-gray-500">{language === "fa" ? "باقی‌مانده:" : "Remaining:"}</span>
                   <span
                     className={selectedSale.remaining_amount > 0 ? "text-red-500" : "text-emerald-500"}
-                    style={{ fontWeight: 700 }}
+                    className="font-bold"
                   >
                     {formatCurrency(selectedSale.remaining_amount, selectedSale.currency)}
                   </span>
@@ -598,7 +596,7 @@ export default function Sales() {
 
             {/* Add Items */}
             <div className="bg-gray-50 rounded-xl p-4 space-y-3">
-              <h4 className="text-gray-700 text-sm" style={{ fontWeight: 600 }}>
+              <h4 className="text-gray-700 text-sm font-semibold">
                 {language === "fa" ? "افزودن جنس" : "Add Item"}
               </h4>
 
@@ -674,7 +672,7 @@ export default function Sales() {
             {/* Items List */}
             {form.items.length > 0 && (
               <div className="space-y-2">
-                <h4 className="text-gray-700 text-sm" style={{ fontWeight: 600 }}>
+                <h4 className="text-gray-700 text-sm font-semibold">
                   {language === "fa" ? "اقلام فاکتور" : "Invoice Items"}
                 </h4>
                 {form.items.map((item, idx) => {
@@ -682,7 +680,7 @@ export default function Sales() {
                   return (
                     <div key={idx} className="flex items-center gap-2 bg-blue-50 rounded-xl p-3">
                       <div className="flex-1">
-                        <p className="text-gray-800 text-sm" style={{ fontWeight: 500 }}>
+                        <p className="text-gray-800 text-sm font-medium">
                           {product?.name}
                         </p>
                       </div>
@@ -703,7 +701,7 @@ export default function Sales() {
                           onChange={(e) => updateItemPrice(idx, Number(e.target.value))}
                           className="w-24 h-8 text-center"
                         />
-                        <span className="text-blue-600" style={{ fontWeight: 600 }}>
+                        <span className="text-blue-600 font-semibold">
                           {formatCurrency(item.quantity * item.price, selectedCurrency)}
                         </span>
                         <Button type="button" variant="ghost" size="sm" onClick={() => removeItem(idx)} className="text-red-500">
@@ -721,7 +719,7 @@ export default function Sales() {
               <div className="bg-gray-50 rounded-xl p-4 space-y-3">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">{language === "fa" ? "مجموع:" : "Subtotal:"}</span>
-                  <span className="text-gray-800" style={{ fontWeight: 700 }}>
+                  <span className="text-gray-800 font-bold">
                     {formatCurrency(subtotal, selectedCurrency)}
                   </span>
                 </div>
@@ -738,7 +736,7 @@ export default function Sales() {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">{language === "fa" ? "مبلغ کل:" : "Total:"}</span>
-                  <span className="text-gray-800" style={{ fontWeight: 700 }}>
+                  <span className="text-gray-800 font-bold">
                     {formatCurrency(totalAmount, selectedCurrency)}
                   </span>
                 </div>
@@ -755,7 +753,7 @@ export default function Sales() {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">{language === "fa" ? "باقی‌مانده (قرضه):" : "Remaining (Credit):"}</span>
-                  <span className={remainingAmount > 0 ? "text-red-500" : "text-emerald-500"} style={{ fontWeight: 700 }}>
+                  <span className={remainingAmount > 0 ? "text-red-500" : "text-emerald-500"} className="font-bold">
                     {formatCurrency(remainingAmount, selectedCurrency)}
                   </span>
                 </div>

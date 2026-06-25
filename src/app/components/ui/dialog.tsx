@@ -6,41 +6,14 @@ import { XIcon } from "lucide-react";
 
 import { cn } from "./utils";
 
-const Dialog = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Root>,
-  React.ComponentProps<typeof DialogPrimitive.Root>
->((props, ref) => {
-  return <DialogPrimitive.Root data-slot="dialog" {...props} />;
-});
-Dialog.displayName = "Dialog";
-
-const DialogTrigger = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Trigger>,
-  React.ComponentProps<typeof DialogPrimitive.Trigger>
->((props, ref) => {
-  return <DialogPrimitive.Trigger ref={ref} data-slot="dialog-trigger" {...props} />;
-});
-DialogTrigger.displayName = "DialogTrigger";
-
-const DialogPortal = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Portal>,
-  React.ComponentProps<typeof DialogPrimitive.Portal>
->((props, ref) => {
-  return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />;
-});
-DialogPortal.displayName = "DialogPortal";
-
-const DialogClose = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Close>,
-  React.ComponentProps<typeof DialogPrimitive.Close>
->((props, ref) => {
-  return <DialogPrimitive.Close ref={ref} data-slot="dialog-close" {...props} />;
-});
-DialogClose.displayName = "DialogClose";
+const Dialog = DialogPrimitive.Root;
+const DialogTrigger = DialogPrimitive.Trigger;
+const DialogPortal = DialogPrimitive.Portal;
+const DialogClose = DialogPrimitive.Close;
 
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
-  React.ComponentProps<typeof DialogPrimitive.Overlay>
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
 >(({ className, ...props }, ref) => {
   return (
     <DialogPrimitive.Overlay
@@ -58,7 +31,7 @@ DialogOverlay.displayName = "DialogOverlay";
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentProps<typeof DialogPrimitive.Content>
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
 >(({ className, children, ...props }, ref) => {
   return (
     <DialogPortal data-slot="dialog-portal">

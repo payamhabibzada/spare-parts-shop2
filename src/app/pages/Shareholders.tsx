@@ -18,7 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "../components/ui/table";
-import { Plus, Trash2, Edit, Banknote, TrendingUp, Eye } from "lucide-react";
+import { Plus, Trash2, Edit, Eye } from "lucide-react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
@@ -29,10 +29,6 @@ export default function Shareholders() {
     addShareHolder,
     updateShareHolder,
     deleteShareHolder,
-    sales,
-    expenses,
-    withdrawals,
-    payments,
     language,
   } = useApp();
 
@@ -159,15 +155,8 @@ export default function Shareholders() {
     }
   };
 
-  // Calculate total profit
-  const totalSalesAfn = sales.filter(s => s.currency === "AFN").reduce((sum, s) => sum + s.total_amount, 0);
-  const totalSalesUsd = sales.filter(s => s.currency === "USD").reduce((sum, s) => sum + s.total_amount, 0);
+  // Totals were calculated previously but are unused; removed to silence TS warnings
 
-  const totalWithdrawalsAfn = withdrawals.reduce((sum, w) => sum + w.amount_afn, 0);
-  const totalWithdrawalsUsd = withdrawals.reduce((sum, w) => sum + w.amount_usd, 0);
-
-  const profitAfn = totalSalesAfn - totalWithdrawalsAfn;
-  const profitUsd = totalSalesUsd - totalWithdrawalsUsd;
 
   return (
     <div className="space-y-4">
@@ -303,11 +292,11 @@ export default function Shareholders() {
             ) : (
               shareholders.map((sh) => (
                 <TableRow key={sh.shareholder_id}>
-                  <TableCell style={{ fontWeight: 500 }}>{sh.name}</TableCell>
+                  <TableCell className="font-medium">{sh.name}</TableCell>
                   <TableCell>{formatCurrency(sh.investment_amount_afn, "AFN")}</TableCell>
                   <TableCell>{formatCurrency(sh.investment_amount_usd, "USD")}</TableCell>
                   <TableCell>
-                    <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-md text-sm" style={{ fontWeight: 500 }}>
+                    <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-md text-sm font-medium">
                       {sh.share_percentage}%
                     </span>
                   </TableCell>

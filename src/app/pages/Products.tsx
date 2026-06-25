@@ -218,9 +218,9 @@ export default function Products() {
       p.stock.toString(),
     ]);
     exportToPDF(
-      language === "fa" ? "لیست اجناس" : language === "ps" ? "د توکو لیست" : "Products List",
       headers,
       data,
+      language === "fa" ? "لیست اجناس" : language === "ps" ? "د توکو لیست" : "Products List",
       language === "fa" || language === "ps" ? "rtl" : "ltr"
     );
     toast.success(language === "fa" ? "فایل PDF دانلود شد" : language === "ps" ? "PDF فایل ډاونلوډ شو" : "PDF file downloaded");
@@ -245,7 +245,7 @@ export default function Products() {
                     ? "bg-blue-500 text-white"
                     : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
                 }`}
-                style={{ fontWeight: 500 }}
+                className="font-medium"
               >
                 {cat}
               </button>
@@ -254,24 +254,21 @@ export default function Products() {
           <div className="flex gap-2">
             <button
               onClick={handleExportExcel}
-              className="flex items-center gap-2 bg-green-50 hover:bg-green-100 text-green-700 border border-green-200 px-3 py-1.5 rounded-xl transition-colors text-sm"
-              style={{ fontWeight: 500 }}
+              className="flex items-center gap-2 bg-green-50 hover:bg-green-100 text-green-700 border border-green-200 px-3 py-1.5 rounded-xl transition-colors text-sm font-medium"
             >
               <FileSpreadsheet className="w-4 h-4" />
               {language === "fa" ? "اکسل" : language === "ps" ? "اکسل" : "Excel"}
             </button>
             <button
               onClick={handleExportPDF}
-              className="flex items-center gap-2 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 px-3 py-1.5 rounded-xl transition-colors text-sm"
-              style={{ fontWeight: 500 }}
+              className="flex items-center gap-2 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 px-3 py-1.5 rounded-xl transition-colors text-sm font-medium"
             >
               <FileDown className="w-4 h-4" />
               PDF
             </button>
             <button
               onClick={openAdd}
-              className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition-colors text-sm"
-              style={{ fontWeight: 600 }}
+              className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition-colors text-sm font-semibold"
             >
               <Plus className="w-4 h-4" />
               {language === "fa" ? "افزودن جنس" : language === "ps" ? "توکی اضافه کول" : "Add Product"}
@@ -309,13 +306,13 @@ export default function Products() {
                     p.stock === 0 ? "bg-red-100 text-red-600" :
                     p.stock <= p.min_stock ? "bg-orange-100 text-orange-600" :
                     "bg-emerald-100 text-emerald-600"
-                  }`} style={{ fontWeight: 500 }}>
+                  }`} className="font-medium">
                     {p.stock === 0 && <AlertTriangle className="w-3 h-3 inline ml-1" />}
                     {p.stock > 0 && p.stock <= p.min_stock && <AlertTriangle className="w-3 h-3 inline ml-1" />}
                     {language === "fa" ? "موجودی: " : language === "ps" ? "موجودي: " : "Stock: "}{p.stock}
                   </span>
                 </div>
-                <h4 className="text-gray-800 mb-1" style={{ fontWeight: 600 }}>{p.name}</h4>
+                <h4 className="text-gray-800 mb-1 font-semibold">{p.name}</h4>
                 <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">{p.category}</span>
                 {p.description && (
                   <p className="text-gray-400 text-xs mt-2 line-clamp-2">{p.description}</p>
@@ -324,15 +321,15 @@ export default function Products() {
               <div className="px-4 pb-3 space-y-1.5">
                 <div className="flex justify-between text-xs text-gray-500">
                   <span>{language === "fa" ? "قیمت خرید:" : language === "ps" ? "د پیرود قیمت:" : "Buy Price:"}</span>
-                  <span className="text-gray-700" style={{ fontWeight: 500 }}>{formatCurrency(buyPrice, currency)}</span>
+                  <span className="text-gray-700 font-medium">{formatCurrency(buyPrice, currency)}</span>
                 </div>
                 <div className="flex justify-between text-xs text-gray-500">
                   <span>{language === "fa" ? "قیمت فروش:" : language === "ps" ? "د پلور قیمت:" : "Sell Price:"}</span>
-                  <span className="text-emerald-600" style={{ fontWeight: 600 }}>{formatCurrency(sellPrice, currency)}</span>
+                  <span className="text-emerald-600 font-semibold">{formatCurrency(sellPrice, currency)}</span>
                 </div>
                 <div className="flex justify-between text-xs text-gray-500">
                   <span>{language === "fa" ? "سود:" : language === "ps" ? "ګټه:" : "Profit:"}</span>
-                  <span className="text-blue-600" style={{ fontWeight: 500 }}>{formatCurrency(profit, currency)}</span>
+                  <span className="text-blue-600 font-medium">{formatCurrency(profit, currency)}</span>
                 </div>
               </div>
               <div className="flex border-t border-gray-100">
@@ -368,7 +365,7 @@ export default function Products() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" dir={language === "fa" || language === "ps" ? "rtl" : "ltr"}>
           <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="px-6 py-5 border-b border-gray-100">
-              <h3 className="text-gray-800" style={{ fontWeight: 700 }}>
+              <h3 className="text-gray-800 font-bold">
                 {editProduct
                   ? (language === "fa" ? "ویرایش جنس" : language === "ps" ? "توکی سمول" : "Edit Product")
                   : (language === "fa" ? "افزودن جنس جدید" : language === "ps" ? "نوی توکی اضافه کول" : "Add New Product")}
@@ -542,7 +539,7 @@ export default function Products() {
                 <div className="border-t border-gray-100 pt-4">
                   <div className="flex items-center gap-2 mb-3">
                     <Truck className="w-4 h-4 text-orange-500" />
-                    <h4 className="text-gray-700 text-sm" style={{ fontWeight: 600 }}>
+                    <h4 className="text-gray-700 text-sm font-semibold">
                       {language === "fa" ? "اطلاعات سپلایر (اختیاری)" :
                        language === "ps" ? "د سپلایر معلومات (اختیاري)" :
                        "Supplier Info (Optional)"}
@@ -603,7 +600,7 @@ export default function Products() {
                                   <p className="text-xs text-gray-400">
                                     {language === "fa" ? "افغانی" : language === "ps" ? "افغانۍ" : "AFN"}
                                   </p>
-                                  <p className="text-orange-700 text-sm" style={{ fontWeight: 700 }}>
+                                  <p className="text-orange-700 text-sm font-bold">
                                     {formatCurrency(totalAfnCost, "AFN")}
                                   </p>
                                 </div>
@@ -613,7 +610,7 @@ export default function Products() {
                                   <p className="text-xs text-gray-400">
                                     {language === "fa" ? "دالر" : language === "ps" ? "ډالر" : "USD"}
                                   </p>
-                                  <p className="text-orange-700 text-sm" style={{ fontWeight: 700 }}>
+                                  <p className="text-orange-700 text-sm font-bold">
                                     {formatCurrency(totalUsdCost, "USD")}
                                   </p>
                                 </div>
@@ -686,8 +683,7 @@ export default function Products() {
               <div className="flex gap-3 pt-2">
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2.5 rounded-xl text-sm transition-colors"
-                  style={{ fontWeight: 600 }}
+                  className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2.5 rounded-xl text-sm transition-colors font-semibold"
                 >
                   {editProduct
                     ? (language === "fa" ? "ذخیره تغییرات" : language === "ps" ? "بدلونونه ساتل" : "Save Changes")
@@ -696,8 +692,7 @@ export default function Products() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm transition-colors"
-                  style={{ fontWeight: 500 }}
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm transition-colors font-medium"
                 >
                   {language === "fa" ? "انصراف" : language === "ps" ? "لغوه" : "Cancel"}
                 </button>
@@ -714,7 +709,7 @@ export default function Products() {
             <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Trash2 className="w-6 h-6 text-red-500" />
             </div>
-            <h3 className="text-gray-800 mb-2" style={{ fontWeight: 700 }}>
+            <h3 className="text-gray-800 mb-2 font-bold">
               {language === "fa" ? "حذف جنس" : language === "ps" ? "توکی حذف کول" : "Delete Product"}
             </h3>
             <p className="text-gray-500 text-sm mb-6">
@@ -731,15 +726,13 @@ export default function Products() {
                   setDeleteConfirm(null);
                   toast.success(language === "fa" ? "جنس حذف شد" : language === "ps" ? "توکی حذف شو" : "Product deleted");
                 }}
-                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-xl text-sm transition-colors"
-                style={{ fontWeight: 600 }}
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-xl text-sm transition-colors font-semibold"
               >
                 {language === "fa" ? "بله، حذف شود" : language === "ps" ? "هو، حذف کړئ" : "Yes, Delete"}
               </button>
               <button
                 onClick={() => setDeleteConfirm(null)}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm transition-colors"
-                style={{ fontWeight: 500 }}
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm transition-colors font-medium"
               >
                 {language === "fa" ? "انصراف" : language === "ps" ? "لغوه" : "Cancel"}
               </button>

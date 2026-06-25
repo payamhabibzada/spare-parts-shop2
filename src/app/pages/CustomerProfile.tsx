@@ -6,15 +6,12 @@ import {
   User,
   Phone,
   MapPin,
-  DollarSign,
   ShoppingCart,
   CreditCard,
   ArrowDownToLine,
   Calendar,
   Printer,
-  Download,
   FileSpreadsheet,
-  FileText,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -303,7 +300,7 @@ export default function CustomerProfile() {
                 <User className="w-8 h-8 text-blue-600" />
               </div>
               <div>
-                <h1 className="text-2xl text-gray-800" style={{ fontWeight: 700 }}>
+                <h1 className="text-2xl text-gray-800 font-bold">
                   {customer.name}
                 </h1>
                 <p className="text-gray-500">
@@ -331,7 +328,7 @@ export default function CustomerProfile() {
               <p className="text-red-600 text-sm mb-1">
                 {language === "fa" ? "قرضه افغانی" : language === "ps" ? "پور افغانۍ" : "Debt AFN"}
               </p>
-              <p className="text-2xl text-red-700" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-red-700 font-bold">
                 {formatCurrency(customer.balance_afn, "AFN")}
               </p>
             </div>
@@ -339,7 +336,7 @@ export default function CustomerProfile() {
               <p className="text-orange-600 text-sm mb-1">
                 {language === "fa" ? "قرضه دالر" : language === "ps" ? "پور ډالر" : "Debt USD"}
               </p>
-              <p className="text-2xl text-orange-700" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-orange-700 font-bold">
                 {formatCurrency(customer.balance_usd, "USD")}
               </p>
             </div>
@@ -360,12 +357,12 @@ export default function CustomerProfile() {
               </p>
               <div className="space-y-1">
                 {totalSalesAfn > 0 && (
-                  <p className="text-lg text-blue-600" style={{ fontWeight: 600 }}>
+                  <p className="text-lg text-blue-600 font-semibold">
                     {formatCurrency(totalSalesAfn, "AFN")}
                   </p>
                 )}
                 {totalSalesUsd > 0 && (
-                  <p className="text-lg text-blue-600" style={{ fontWeight: 600 }}>
+                  <p className="text-lg text-blue-600 font-semibold">
                     {formatCurrency(totalSalesUsd, "USD")}
                   </p>
                 )}
@@ -385,12 +382,12 @@ export default function CustomerProfile() {
               </p>
               <div className="space-y-1">
                 {totalPaymentsAfn > 0 && (
-                  <p className="text-lg text-green-600" style={{ fontWeight: 600 }}>
+                  <p className="text-lg text-green-600 font-semibold">
                     {formatCurrency(totalPaymentsAfn, "AFN")}
                   </p>
                 )}
                 {totalPaymentsUsd > 0 && (
-                  <p className="text-lg text-green-600" style={{ fontWeight: 600 }}>
+                  <p className="text-lg text-green-600 font-semibold">
                     {formatCurrency(totalPaymentsUsd, "USD")}
                   </p>
                 )}
@@ -410,12 +407,12 @@ export default function CustomerProfile() {
               </p>
               <div className="space-y-1">
                 {totalWithdrawalsAfn > 0 && (
-                  <p className="text-lg text-purple-600" style={{ fontWeight: 600 }}>
+                  <p className="text-lg text-purple-600 font-semibold">
                     {formatCurrency(totalWithdrawalsAfn, "AFN")}
                   </p>
                 )}
                 {totalWithdrawalsUsd > 0 && (
-                  <p className="text-lg text-purple-600" style={{ fontWeight: 600 }}>
+                  <p className="text-lg text-purple-600 font-semibold">
                     {formatCurrency(totalWithdrawalsUsd, "USD")}
                   </p>
                 )}
@@ -427,7 +424,7 @@ export default function CustomerProfile() {
 
       {/* Transaction History */}
       <div className="bg-white rounded-xl p-6 border border-gray-200">
-        <h2 className="text-xl text-gray-800 mb-4" style={{ fontWeight: 700 }}>
+        <h2 className="text-xl text-gray-800 mb-4 font-bold">
           {language === "fa" ? "تاریخچه تراکنش‌ها" :
           language === "ps" ? "د تراکنش تاریخ" :
           "Transaction History"}
@@ -474,10 +471,10 @@ export default function CustomerProfile() {
                       <div className="flex items-start justify-between gap-3 mb-2">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap mb-1">
-                            <span className={`text-xs px-2 py-0.5 rounded-full ${typeBadge.cls}`} style={{ fontWeight: 600 }}>
+                            <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${typeBadge.cls}`}>
                               {typeBadge.label}
                             </span>
-                            <span className="text-sm text-gray-800" style={{ fontWeight: 600 }}>
+                            <span className="text-sm text-gray-800 font-semibold">
                               {transaction.description}
                             </span>
                           </div>
@@ -495,12 +492,12 @@ export default function CustomerProfile() {
 
                         <div className="text-right flex-shrink-0">
                           {transaction.amount_afn > 0 && (
-                            <p className={`text-lg ${amountColor}`} style={{ fontWeight: 700 }}>
+                            <p className={`text-lg ${amountColor} font-bold`}>
                               {isPayment ? "- " : ""}{formatCurrency(transaction.amount_afn, "AFN")}
                             </p>
                           )}
                           {transaction.amount_usd > 0 && (
-                            <p className={`text-lg ${amountColor}`} style={{ fontWeight: 700 }}>
+                            <p className={`text-lg ${amountColor} font-bold`}>
                               {isPayment ? "- " : ""}{formatCurrency(transaction.amount_usd, "USD")}
                             </p>
                           )}
@@ -514,7 +511,7 @@ export default function CustomerProfile() {
                             <p className="text-xs text-gray-400 mb-0.5">
                               {language === "fa" ? "مجموع" : language === "ps" ? "ټول" : "Total"}
                             </p>
-                            <p className="text-sm text-blue-700" style={{ fontWeight: 700 }}>
+                            <p className="text-sm text-blue-700 font-bold">
                               {formatCurrency(
                                 transaction.amount_afn > 0 ? transaction.amount_afn : transaction.amount_usd,
                                 (transaction as any).currency
@@ -525,7 +522,7 @@ export default function CustomerProfile() {
                             <p className="text-xs text-gray-400 mb-0.5">
                               {language === "fa" ? "پرداخت‌شده" : language === "ps" ? "تادیه شوی" : "Paid"}
                             </p>
-                            <p className="text-sm text-green-700" style={{ fontWeight: 700 }}>
+                            <p className="text-sm text-green-700 font-bold">
                               {formatCurrency(
                                 (transaction as any).paid_afn > 0 ? (transaction as any).paid_afn : (transaction as any).paid_usd,
                                 (transaction as any).currency
@@ -536,7 +533,7 @@ export default function CustomerProfile() {
                             <p className="text-xs text-gray-400 mb-0.5">
                               {language === "fa" ? "باقی‌مانده" : language === "ps" ? "پاتې" : "Remaining"}
                             </p>
-                            <p className={`text-sm ${(transaction as any).remaining_afn > 0 || (transaction as any).remaining_usd > 0 ? "text-red-600" : "text-green-600"}`} style={{ fontWeight: 700 }}>
+                            <p className={`text-sm ${(transaction as any).remaining_afn > 0 || (transaction as any).remaining_usd > 0 ? "text-red-600" : "text-green-600"} font-bold`}>
                               {formatCurrency(
                                 (transaction as any).remaining_afn > 0 ? (transaction as any).remaining_afn : (transaction as any).remaining_usd,
                                 (transaction as any).currency
@@ -549,13 +546,13 @@ export default function CustomerProfile() {
                       {/* Payment status badge for sales */}
                       {"payment_status" in transaction && transaction.payment_status && (
                         <div className="mb-2">
-                          <span className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full ${
+                          <span className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full font-medium ${
                             transaction.payment_status === "paid"
                               ? "bg-green-100 text-green-700"
                               : transaction.payment_status === "partial"
                               ? "bg-yellow-100 text-yellow-700"
                               : "bg-red-100 text-red-600"
-                          }`} style={{ fontWeight: 500 }}>
+                          }`}>
                             {transaction.payment_status === "paid"
                               ? (language === "fa" ? "✓ تسویه کامل" : language === "ps" ? "✓ بشپړه تادیه" : "✓ Fully Paid")
                               : transaction.payment_status === "partial"
@@ -568,7 +565,7 @@ export default function CustomerProfile() {
                       {/* Line items for sales */}
                       {"items" in transaction && transaction.items && transaction.items.length > 0 && (
                         <div className="mt-2 pt-2 border-t border-blue-100">
-                          <p className="text-xs text-gray-500 mb-1.5" style={{ fontWeight: 600 }}>
+                          <p className="text-xs text-gray-500 mb-1.5 font-semibold">
                             {language === "fa" ? "اقلام فروش:" : language === "ps" ? "د پلور توکي:" : "Items:"}
                           </p>
                           <div className="space-y-1">
@@ -576,11 +573,11 @@ export default function CustomerProfile() {
                               <div key={idx} className="flex justify-between items-center text-xs bg-white px-3 py-2 rounded-lg border border-gray-100">
                                 <div className="flex items-center gap-1.5 min-w-0">
                                   <span className="w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0" />
-                                  <span className="text-gray-700 truncate" style={{ fontWeight: 500 }}>{item.product_name}</span>
+                                  <span className="text-gray-700 truncate font-medium">{item.product_name}</span>
                                   <span className="text-gray-400 flex-shrink-0">× {item.quantity}</span>
                                   <span className="text-gray-400 flex-shrink-0">@ {formatCurrency(item.unit_price, (transaction as any).currency)}</span>
                                 </div>
-                                <span className="text-gray-800 flex-shrink-0" style={{ fontWeight: 600 }}>
+                                <span className="text-gray-800 flex-shrink-0 font-semibold">
                                   {formatCurrency(item.total, (transaction as any).currency)}
                                 </span>
                               </div>

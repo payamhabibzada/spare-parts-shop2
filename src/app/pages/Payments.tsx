@@ -14,7 +14,7 @@ const today = new Date().toISOString().split("T")[0];
 const emptyForm: PaymentFormData = { customer_id: "", amount: "", currency: "AFN", date: today, note: "" };
 
 export default function Payments() {
-  const { payments, customers, addPayment, deletePayment, getCustomerById, language, currency } = useApp();
+  const { payments, customers, addPayment, deletePayment, getCustomerById, language } = useApp();
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState<PaymentFormData>(emptyForm);
@@ -55,43 +55,42 @@ export default function Payments() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
           <p className="text-gray-500 text-sm mb-1">{language === "fa" ? "پرداخت‌ها (افغانی)" : "Payments (AFN)"}</p>
-          <p className="text-gray-800" style={{ fontWeight: 700 }}>{formatCurrency(totalPaymentsAfn, "AFN")}</p>
+          <p className="text-gray-800 font-bold">{formatCurrency(totalPaymentsAfn, "AFN")}</p>
         </div>
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
           <p className="text-gray-500 text-sm mb-1">{language === "fa" ? "پرداخت‌ها (دالر)" : "Payments (USD)"}</p>
-          <p className="text-gray-800" style={{ fontWeight: 700 }}>{formatCurrency(totalPaymentsUsd, "USD")}</p>
+          <p className="text-gray-800 font-bold">{formatCurrency(totalPaymentsUsd, "USD")}</p>
         </div>
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
           <p className="text-gray-500 text-sm mb-1">{language === "fa" ? "تعداد پرداخت‌ها" : "Total Payments"}</p>
-          <p className="text-gray-800" style={{ fontWeight: 700 }}>{payments.length} {language === "fa" ? "پرداخت" : "payments"}</p>
+          <p className="text-gray-800 font-bold">{payments.length} {language === "fa" ? "پرداخت" : "payments"}</p>
         </div>
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
           <p className="text-gray-500 text-sm mb-1">{language === "fa" ? "مشتریان بدهکار" : "Debtors"}</p>
-          <p className="text-red-500" style={{ fontWeight: 700 }}>{debtorCustomers.length} {language === "fa" ? "نفر" : "customers"}</p>
+          <p className="text-red-500 font-bold">{debtorCustomers.length} {language === "fa" ? "نفر" : "customers"}</p>
         </div>
       </div>
 
       {/* Debtors quick list */}
       {debtorCustomers.length > 0 && (
         <div className="bg-red-50 border border-red-100 rounded-2xl p-4">
-          <h4 className="text-red-700 text-sm mb-3" style={{ fontWeight: 600 }}>{language === "fa" ? "مشتریان بدهکار" : "Debtors"}</h4>
+          <h4 className="text-red-700 text-sm mb-3 font-semibold">{language === "fa" ? "مشتریان بدهکار" : "Debtors"}</h4>
           <div className="flex flex-wrap gap-2">
             {debtorCustomers.map(c => (
               <div key={c.customer_id} className="bg-white rounded-xl px-3 py-2 text-sm border border-red-100">
-                <span className="text-gray-800" style={{ fontWeight: 500 }}>{c.name}</span>
+                <span className="text-gray-800 font-medium">{c.name}</span>
                 {c.balance_afn > 0 && (
-                  <span className="text-red-500 mr-2" style={{ fontWeight: 600 }}>{formatCurrency(c.balance_afn, "AFN")}</span>
+                  <span className="text-red-500 mr-2 font-semibold">{formatCurrency(c.balance_afn, "AFN")}</span>
                 )}
                 {c.balance_usd > 0 && (
-                  <span className="text-red-500 mr-2" style={{ fontWeight: 600 }}>{formatCurrency(c.balance_usd, "USD")}</span>
+                  <span className="text-red-500 mr-2 font-semibold">{formatCurrency(c.balance_usd, "USD")}</span>
                 )}
                 <button
                   onClick={() => {
                     setForm({ ...emptyForm, customer_id: c.customer_id, currency: c.balance_afn > 0 ? "AFN" : "USD" });
                     setShowModal(true);
                   }}
-                  className="text-blue-500 hover:text-blue-700 text-xs mr-1"
-                  style={{ fontWeight: 500 }}
+                  className="text-blue-500 hover:text-blue-700 text-xs mr-1 font-medium"
                 >
                   {language === "fa" ? "ثبت پرداخت" : "Add Payment"}
                 </button>
@@ -114,8 +113,7 @@ export default function Payments() {
         </div>
         <button
           onClick={() => { setForm(emptyForm); setShowModal(true); }}
-          className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2.5 rounded-xl transition-colors text-sm"
-          style={{ fontWeight: 600 }}
+          className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2.5 rounded-xl transition-colors text-sm font-semibold"
         >
           <Plus className="w-4 h-4" />
           {language === "fa" ? "ثبت پرداخت" : "Add Payment"}
@@ -128,13 +126,13 @@ export default function Payments() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr className={language === "fa" ? "text-right" : "text-left"}>
-                <th className="px-4 py-3 text-gray-500" style={{ fontWeight: 500 }}>{language === "fa" ? "مشتری" : "Customer"}</th>
-                <th className="px-4 py-3 text-gray-500" style={{ fontWeight: 500 }}>{language === "fa" ? "مبلغ" : "Amount"}</th>
-                <th className="px-4 py-3 text-gray-500" style={{ fontWeight: 500 }}>{language === "fa" ? "واحد پول" : "Currency"}</th>
-                <th className="px-4 py-3 text-gray-500 hidden sm:table-cell" style={{ fontWeight: 500 }}>{language === "fa" ? "تاریخ" : "Date"}</th>
-                <th className="px-4 py-3 text-gray-500 hidden md:table-cell" style={{ fontWeight: 500 }}>{language === "fa" ? "یادداشت" : "Note"}</th>
-                <th className="px-4 py-3 text-gray-500 hidden md:table-cell" style={{ fontWeight: 500 }}>{language === "fa" ? "قرضه باقی‌مانده" : "Remaining Debt"}</th>
-                <th className="px-4 py-3 text-gray-500 text-center" style={{ fontWeight: 500 }}>{language === "fa" ? "عملیات" : "Actions"}</th>
+                <th className="px-4 py-3 text-gray-500 font-medium">{language === "fa" ? "مشتری" : "Customer"}</th>
+                <th className="px-4 py-3 text-gray-500 font-medium">{language === "fa" ? "مبلغ" : "Amount"}</th>
+                <th className="px-4 py-3 text-gray-500 font-medium">{language === "fa" ? "واحد پول" : "Currency"}</th>
+                <th className="px-4 py-3 text-gray-500 hidden sm:table-cell font-medium">{language === "fa" ? "تاریخ" : "Date"}</th>
+                <th className="px-4 py-3 text-gray-500 hidden md:table-cell font-medium">{language === "fa" ? "یادداشت" : "Note"}</th>
+                <th className="px-4 py-3 text-gray-500 hidden md:table-cell font-medium">{language === "fa" ? "قرضه باقی‌مانده" : "Remaining Debt"}</th>
+                <th className="px-4 py-3 text-gray-500 text-center font-medium">{language === "fa" ? "عملیات" : "Actions"}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
@@ -148,10 +146,10 @@ export default function Payments() {
                         <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
                           <CheckCircle className="w-4 h-4 text-emerald-500" />
                         </div>
-                        <span className="text-gray-800" style={{ fontWeight: 500 }}>{customer?.name || (language === "fa" ? "نامشخص" : "Unknown")}</span>
+                        <span className="text-gray-800 font-medium">{customer?.name || (language === "fa" ? "نامشخص" : "Unknown")}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-emerald-600" style={{ fontWeight: 700 }}>
+                    <td className="px-4 py-3 text-emerald-600 font-bold">
                       {formatCurrency(payment.amount, payment.currency)}
                     </td>
                     <td className="px-4 py-3 text-gray-500">{payment.currency}</td>
@@ -159,17 +157,19 @@ export default function Payments() {
                     <td className="px-4 py-3 text-gray-400 hidden md:table-cell">{payment.note || "-"}</td>
                     <td className="px-4 py-3 hidden md:table-cell">
                       {customer && customerDebt > 0 ? (
-                        <span className="text-red-500 text-xs" style={{ fontWeight: 500 }}>
+                        <span className="text-red-500 text-xs font-medium">
                           {formatCurrency(customerDebt, payment.currency)}
                         </span>
                       ) : (
-                        <span className="text-emerald-500 text-xs" style={{ fontWeight: 500 }}>{language === "fa" ? "تسویه" : "Settled"}</span>
+                        <span className="text-emerald-500 text-xs font-medium">{language === "fa" ? "تسویه" : "Settled"}</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-center">
                       <button
                         onClick={() => setDeleteConfirm(payment.payment_id)}
                         className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                        title={language === "fa" ? "حذف پرداخت" : "Delete payment"}
+                        aria-label={language === "fa" ? "حذف پرداخت" : "Delete payment"}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -193,15 +193,21 @@ export default function Payments() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" dir={language === "fa" ? "rtl" : "ltr"}>
           <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl">
             <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
-              <h3 className="text-gray-800" style={{ fontWeight: 700 }}>{language === "fa" ? "ثبت پرداخت جدید" : "Add New Payment"}</h3>
-              <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600">
+              <h3 className="text-gray-800 font-bold">{language === "fa" ? "ثبت پرداخت جدید" : "Add New Payment"}</h3>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="text-gray-400 hover:text-gray-600"
+                  title={language === "fa" ? "بستن" : "Close"}
+                  aria-label={language === "fa" ? "بستن" : "Close"}
+                >
                 <X className="w-5 h-5" />
               </button>
             </div>
             <form onSubmit={handleSubmit} className="px-6 py-4 space-y-4">
               <div>
-                <label className="block text-sm text-gray-600 mb-1.5">{language === "fa" ? "مشتری *" : "Customer *"}</label>
+                <label htmlFor="payment-customer" className="block text-sm text-gray-600 mb-1.5">{language === "fa" ? "مشتری *" : "Customer *"}</label>
                 <select
+                  id="payment-customer"
                   required
                   value={form.customer_id}
                   onChange={e => setForm({ ...form, customer_id: e.target.value })}
@@ -227,8 +233,9 @@ export default function Payments() {
                 )}
               </div>
               <div>
-                <label className="block text-sm text-gray-600 mb-1.5">{language === "fa" ? "واحد پول *" : "Currency *"}</label>
+                <label htmlFor="payment-currency" className="block text-sm text-gray-600 mb-1.5">{language === "fa" ? "واحد پول *" : "Currency *"}</label>
                 <select
+                  id="payment-currency"
                   required
                   value={form.currency}
                   onChange={e => setForm({ ...form, currency: e.target.value as "AFN" | "USD" })}
@@ -256,8 +263,7 @@ export default function Payments() {
                       <button
                         type="button"
                         onClick={() => setForm({ ...form, amount: selectedCustomer.balance_afn.toString() })}
-                        className="text-blue-500 text-xs hover:underline"
-                        style={{ fontWeight: 500 }}
+                        className="text-blue-500 text-xs hover:underline font-medium"
                       >
                         {language === "fa" ? "پرداخت کامل قرضه" : "Pay full debt"} ({formatCurrency(selectedCustomer.balance_afn, "AFN")})
                       </button>
@@ -266,8 +272,7 @@ export default function Payments() {
                       <button
                         type="button"
                         onClick={() => setForm({ ...form, amount: selectedCustomer.balance_usd.toString() })}
-                        className="text-blue-500 text-xs hover:underline"
-                        style={{ fontWeight: 500 }}
+                        className="text-blue-500 text-xs hover:underline font-medium"
                       >
                         {language === "fa" ? "پرداخت کامل قرضه" : "Pay full debt"} ({formatCurrency(selectedCustomer.balance_usd, "USD")})
                       </button>
@@ -276,8 +281,9 @@ export default function Payments() {
                 )}
               </div>
               <div>
-                <label className="block text-sm text-gray-600 mb-1.5">{language === "fa" ? "تاریخ *" : "Date *"}</label>
+                <label htmlFor="payment-date" className="block text-sm text-gray-600 mb-1.5">{language === "fa" ? "تاریخ *" : "Date *"}</label>
                 <input
+                  id="payment-date"
                   required
                   type="date"
                   value={form.date}
@@ -297,16 +303,14 @@ export default function Payments() {
               <div className="flex gap-3 pt-2">
                 <button
                   type="submit"
-                  className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white py-2.5 rounded-xl text-sm transition-colors"
-                  style={{ fontWeight: 600 }}
+                  className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white py-2.5 rounded-xl text-sm transition-colors font-semibold"
                 >
                   {language === "fa" ? "ثبت پرداخت" : "Add Payment"}
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm transition-colors"
-                  style={{ fontWeight: 500 }}
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm transition-colors font-medium"
                 >
                   {language === "fa" ? "انصراف" : "Cancel"}
                 </button>
@@ -323,20 +327,18 @@ export default function Payments() {
             <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Trash2 className="w-6 h-6 text-red-500" />
             </div>
-            <h3 className="text-gray-800 mb-2" style={{ fontWeight: 700 }}>{language === "fa" ? "حذف پرداخت" : "Delete Payment"}</h3>
+            <h3 className="text-gray-800 mb-2 font-bold">{language === "fa" ? "حذف پرداخت" : "Delete Payment"}</h3>
             <p className="text-gray-500 text-sm mb-6">{language === "fa" ? "با حذف این پرداخت، قرضه مشتری دوباره اضافه می‌شود." : "Deleting this payment will restore the customer's debt."}</p>
             <div className="flex gap-3">
               <button
                 onClick={() => { deletePayment(deleteConfirm); setDeleteConfirm(null); }}
-                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-xl text-sm transition-colors"
-                style={{ fontWeight: 600 }}
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-xl text-sm transition-colors font-semibold"
               >
                 {language === "fa" ? "بله، حذف شود" : "Yes, Delete"}
               </button>
               <button
                 onClick={() => setDeleteConfirm(null)}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm transition-colors"
-                style={{ fontWeight: 500 }}
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-sm transition-colors font-medium"
               >
                 {language === "fa" ? "انصراف" : "Cancel"}
               </button>

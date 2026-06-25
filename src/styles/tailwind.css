@@ -2,3 +2,13 @@
 @source '../**/*.{js,ts,jsx,tsx}';
 
 @import 'tw-animate-css';
+
+@layer utilities {
+  .recharts-tooltip-rtl {
+    direction: rtl;
+  }
+
+  .recharts-tooltip-label-rtl {
+    direction: rtl;
+  }
+}

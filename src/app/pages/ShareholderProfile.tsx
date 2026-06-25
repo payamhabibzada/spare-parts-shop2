@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router";
 import { useApp, formatCurrency } from "../store/AppContext";
 import { Button } from "../components/ui/button";
-import { ArrowLeft, Banknote, TrendingUp, ArrowDownToLine, User, Phone, MapPin, Calendar, DollarSign } from "lucide-react";
+import { ArrowLeft, TrendingUp, ArrowDownToLine, User, Phone, MapPin, Calendar, DollarSign } from "lucide-react";
 
 export default function ShareholderProfile() {
   const { shareholderId } = useParams<{ shareholderId: string }>();
@@ -50,7 +50,7 @@ export default function ShareholderProfile() {
                 <User className="w-8 h-8 text-purple-600" />
               </div>
               <div>
-                <h1 className="text-2xl text-gray-800" style={{ fontWeight: 700 }}>
+                <h1 className="text-2xl text-gray-800 font-bold">
                   {shareholder.name}
                 </h1>
                 <p className="text-gray-500">
@@ -84,7 +84,7 @@ export default function ShareholderProfile() {
               <p className="text-blue-600 text-sm mb-1">
                 {language === "fa" ? "سرمایه افغانی" : language === "ps" ? "پانګه افغانۍ" : "Capital AFN"}
               </p>
-              <p className="text-2xl text-blue-700" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-blue-700 font-bold">
                 {formatCurrency(shareholder.investment_amount_afn, "AFN")}
               </p>
             </div>
@@ -92,7 +92,7 @@ export default function ShareholderProfile() {
               <p className="text-green-600 text-sm mb-1">
                 {language === "fa" ? "سرمایه دالر" : language === "ps" ? "پانګه ډالر" : "Capital USD"}
               </p>
-              <p className="text-2xl text-green-700" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-green-700 font-bold">
                 {formatCurrency(shareholder.investment_amount_usd, "USD")}
               </p>
             </div>
@@ -109,7 +109,7 @@ export default function ShareholderProfile() {
               <p className="text-emerald-100 text-sm">
                 {language === "fa" ? "مفاد ماهانه (؋)" : language === "ps" ? "میاشتنۍ ګټه (؋)" : "Monthly Profit (AFN)"}
               </p>
-              <p className="text-2xl mt-1" style={{ fontWeight: 700 }}>
+              <p className="text-2xl mt-1 font-bold">
                 {formatCurrency(shareholder.monthly_profit_afn, "AFN")}
               </p>
             </div>
@@ -123,7 +123,7 @@ export default function ShareholderProfile() {
               <p className="text-teal-100 text-sm">
                 {language === "fa" ? "مفاد ماهانه ($)" : language === "ps" ? "میاشتنۍ ګټه ($)" : "Monthly Profit (USD)"}
               </p>
-              <p className="text-2xl mt-1" style={{ fontWeight: 700 }}>
+              <p className="text-2xl mt-1 font-bold">
                 {formatCurrency(shareholder.monthly_profit_usd, "USD")}
               </p>
             </div>
@@ -137,7 +137,7 @@ export default function ShareholderProfile() {
               <p className="text-amber-100 text-sm">
                 {language === "fa" ? "باقی مفاد (؋)" : language === "ps" ? "پاتې ګټه (؋)" : "Remaining Profit (AFN)"}
               </p>
-              <p className="text-2xl mt-1" style={{ fontWeight: 700 }}>
+              <p className="text-2xl mt-1 font-bold">
                 {formatCurrency(shareholder.remaining_profit_afn, "AFN")}
               </p>
             </div>
@@ -151,7 +151,7 @@ export default function ShareholderProfile() {
               <p className="text-orange-100 text-sm">
                 {language === "fa" ? "باقی مفاد ($)" : language === "ps" ? "پاتې ګټه ($)" : "Remaining Profit (USD)"}
               </p>
-              <p className="text-2xl mt-1" style={{ fontWeight: 700 }}>
+              <p className="text-2xl mt-1 font-bold">
                 {formatCurrency(shareholder.remaining_profit_usd, "USD")}
               </p>
             </div>
@@ -170,7 +170,7 @@ export default function ShareholderProfile() {
                 language === "ps" ? "ټول وباسنې (افغانۍ)" :
                 "Total Withdrawals (AFN)"}
               </p>
-              <p className="text-xl text-red-600" style={{ fontWeight: 600 }}>
+              <p className="text-xl text-red-600 font-semibold">
                 {formatCurrency(totalWithdrawalsAfn, "AFN")}
               </p>
             </div>
@@ -186,7 +186,7 @@ export default function ShareholderProfile() {
                 language === "ps" ? "ټول وباسنې (ډالر)" :
                 "Total Withdrawals (USD)"}
               </p>
-              <p className="text-xl text-orange-600" style={{ fontWeight: 600 }}>
+              <p className="text-xl text-orange-600 font-semibold">
                 {formatCurrency(totalWithdrawalsUsd, "USD")}
               </p>
             </div>
@@ -196,7 +196,7 @@ export default function ShareholderProfile() {
 
       {/* Withdrawals History */}
       <div className="bg-white rounded-xl p-6 border border-gray-200">
-        <h2 className="text-xl text-gray-800 mb-4" style={{ fontWeight: 700 }}>
+        <h2 className="text-xl text-gray-800 mb-4 font-bold">
           {language === "fa" ? "تاریخچه برداشت‌ها" :
           language === "ps" ? "د وباسنو تاریخ" :
           "Withdrawals History"}
@@ -221,7 +221,7 @@ export default function ShareholderProfile() {
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-gray-800" style={{ fontWeight: 600 }}>
+                      <p className="text-gray-800 font-semibold">
                         {language === "fa" ? "برداشت" : language === "ps" ? "وباسنه" : "Withdrawal"}
                       </p>
                       <p className="text-sm text-gray-500">
@@ -235,12 +235,12 @@ export default function ShareholderProfile() {
 
                     <div className="text-right">
                       {withdrawal.amount_afn > 0 && (
-                        <p className="text-lg text-red-600" style={{ fontWeight: 600 }}>
+                        <p className="text-lg text-red-600 font-semibold">
                           -{formatCurrency(withdrawal.amount_afn, "AFN")}
                         </p>
                       )}
                       {withdrawal.amount_usd > 0 && (
-                        <p className="text-lg text-red-600" style={{ fontWeight: 600 }}>
+                        <p className="text-lg text-red-600 font-semibold">
                           -{formatCurrency(withdrawal.amount_usd, "USD")}
                         </p>
                       )}

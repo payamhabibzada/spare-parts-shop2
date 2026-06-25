@@ -275,7 +275,7 @@ export default function SupplierProfile() {
                 <Building2 className="w-8 h-8 text-indigo-600" />
               </div>
               <div>
-                <h1 className="text-2xl text-gray-800" style={{ fontWeight: 700 }}>
+                <h1 className="text-2xl text-gray-800 font-bold">
                   {supplier.company_name}
                 </h1>
                 <p className="text-gray-500">{supplier.name}</p>
@@ -299,7 +299,7 @@ export default function SupplierProfile() {
               <p className="text-rose-600 text-sm mb-1">
                 {language === "fa" ? "بدهی افغانی" : language === "ps" ? "پور افغانۍ" : "Debt AFN"}
               </p>
-              <p className="text-2xl text-rose-700" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-rose-700 font-bold">
                 {formatCurrency(supplier.balance_afn, "AFN")}
               </p>
             </div>
@@ -307,7 +307,7 @@ export default function SupplierProfile() {
               <p className="text-amber-600 text-sm mb-1">
                 {language === "fa" ? "بدهی دالر" : language === "ps" ? "پور ډالر" : "Debt USD"}
               </p>
-              <p className="text-2xl text-amber-700" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-amber-700 font-bold">
                 {formatCurrency(supplier.balance_usd, "USD")}
               </p>
             </div>
@@ -328,12 +328,12 @@ export default function SupplierProfile() {
               </p>
               <div className="space-y-1">
                 {totalPurchasesAfn > 0 && (
-                  <p className="text-lg text-blue-600" style={{ fontWeight: 600 }}>
+                  <p className="text-lg text-blue-600 font-semibold">
                     {formatCurrency(totalPurchasesAfn, "AFN")}
                   </p>
                 )}
                 {totalPurchasesUsd > 0 && (
-                  <p className="text-lg text-blue-600" style={{ fontWeight: 600 }}>
+                  <p className="text-lg text-blue-600 font-semibold">
                     {formatCurrency(totalPurchasesUsd, "USD")}
                   </p>
                 )}
@@ -353,12 +353,12 @@ export default function SupplierProfile() {
               </p>
               <div className="space-y-1">
                 {totalPaymentsAfn > 0 && (
-                  <p className="text-lg text-green-600" style={{ fontWeight: 600 }}>
+                  <p className="text-lg text-green-600 font-semibold">
                     {formatCurrency(totalPaymentsAfn, "AFN")}
                   </p>
                 )}
                 {totalPaymentsUsd > 0 && (
-                  <p className="text-lg text-green-600" style={{ fontWeight: 600 }}>
+                  <p className="text-lg text-green-600 font-semibold">
                     {formatCurrency(totalPaymentsUsd, "USD")}
                   </p>
                 )}
@@ -370,7 +370,7 @@ export default function SupplierProfile() {
 
       {/* Transaction History */}
       <div className="bg-white rounded-xl p-6 border border-gray-200">
-        <h2 className="text-xl text-gray-800 mb-4" style={{ fontWeight: 700 }}>
+        <h2 className="text-xl text-gray-800 mb-4 font-bold">
           {language === "fa" ? "تاریخچه تراکنش‌ها" :
           language === "ps" ? "د تراکنش تاریخ" :
           "Transaction History"}
@@ -397,7 +397,7 @@ export default function SupplierProfile() {
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-gray-800" style={{ fontWeight: 600 }}>
+                        <p className="text-gray-800 font-semibold">
                           {transaction.description}
                         </p>
                         <p className="text-sm text-gray-500">
@@ -408,13 +408,13 @@ export default function SupplierProfile() {
 
                       <div className="text-right">
                         {transaction.amount_afn > 0 && (
-                          <p className={`text-lg text-${transaction.color}-600`} style={{ fontWeight: 600 }}>
+                          <p className={`text-lg text-${transaction.color}-600`} className="font-semibold">
                             {transaction.type === "payment" ? "-" : "+"}
                             {formatCurrency(transaction.amount_afn, "AFN")}
                           </p>
                         )}
                         {transaction.amount_usd > 0 && (
-                          <p className={`text-lg text-${transaction.color}-600`} style={{ fontWeight: 600 }}>
+                          <p className={`text-lg text-${transaction.color}-600`} className="font-semibold">
                             {transaction.type === "payment" ? "-" : "+"}
                             {formatCurrency(transaction.amount_usd, "USD")}
                           </p>

@@ -30,7 +30,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">⚠️</span>
             </div>
-            <h2 className="text-gray-800 mb-2" style={{ fontWeight: 700 }}>خطای غیرمنتظره</h2>
+            <h2 className="text-gray-800 mb-2 font-bold">خطای غیرمنتظره</h2>
             <p className="text-gray-500 text-sm mb-6">
               یک خطای داخلی رخ داد. لطفاً صفحه را مجدداً بارگذاری کنید.
             </p>

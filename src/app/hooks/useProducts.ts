@@ -212,8 +212,10 @@ export function useLowStockProducts() {
         .from('products')
         .select('*')
         .eq('shop_id', shopId)
-        .lte('stock', supabase.raw('min_stock'))
         .order('stock', { ascending: true });
+
+      if (error) throw error;
+      return (data ?? []).filter((product) => product.stock <= product.min_stock);
 
       if (error) throw error;
       return data;

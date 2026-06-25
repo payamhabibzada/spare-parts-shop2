@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { exportToExcel, exportToPDF } from "../utils/exportUtils";
 
 export default function Customers() {
-  const { customers, addCustomer, updateCustomer, deleteCustomer, sales, payments, withdrawals, getSaleItems, getProductById, language, currency } = useApp();
+  const { customers, addCustomer, updateCustomer, deleteCustomer, sales, payments, withdrawals, getSaleItems, getProductById, language } = useApp();
 
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -246,7 +246,7 @@ export default function Customers() {
       {/* Header */}
       <div className="flex flex-wrap items-center gap-3 justify-between">
         <div>
-          <h2 className="text-gray-900 text-xl mb-1" style={{ fontWeight: 700 }}>
+          <h2 className="text-gray-900 text-xl mb-1 font-bold">
             {language === "fa" ? "مدیریت مشتریان" : "Customers Management"}
           </h2>
           <p className="text-gray-500 text-sm">
@@ -296,7 +296,7 @@ export default function Customers() {
             <Users className="w-8 h-8 text-blue-500" />
             <div>
               <p className="text-gray-500 text-sm">{language === "fa" ? "کل مشتریان" : "Total Customers"}</p>
-              <p className="text-2xl" style={{ fontWeight: 700 }}>
+              <p className="text-2xl font-bold">
                 {customers.length}
               </p>
             </div>
@@ -307,7 +307,7 @@ export default function Customers() {
             <AlertTriangle className="w-8 h-8 text-red-500" />
             <div>
               <p className="text-gray-500 text-sm">{language === "fa" ? "قرضه (افغانی)" : "Debt (AFN)"}</p>
-              <p className="text-2xl text-red-600" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-red-600 font-bold">
                 {formatCurrency(totalDebtAfn, "AFN")}
               </p>
             </div>
@@ -318,7 +318,7 @@ export default function Customers() {
             <AlertTriangle className="w-8 h-8 text-red-500" />
             <div>
               <p className="text-gray-500 text-sm">{language === "fa" ? "قرضه (دالر)" : "Debt (USD)"}</p>
-              <p className="text-2xl text-red-600" style={{ fontWeight: 700 }}>
+              <p className="text-2xl text-red-600 font-bold">
                 {formatCurrency(totalDebtUsd, "USD")}
               </p>
             </div>
@@ -349,16 +349,16 @@ export default function Customers() {
             ) : (
               filtered.map((c) => (
                 <TableRow key={c.customer_id} className={c.balance_afn > 0 || c.balance_usd > 0 ? "bg-red-50" : ""}>
-                  <TableCell style={{ fontWeight: 500 }}>
+                  <TableCell className="font-medium">
                     {c.name}
                     {(c.balance_afn > 0 || c.balance_usd > 0) && <AlertTriangle className="w-4 h-4 text-red-600 inline ml-2" />}
                   </TableCell>
                   <TableCell className="text-gray-600">{c.phone || "-"}</TableCell>
                   <TableCell className="text-gray-600 hidden md:table-cell">{c.address || "-"}</TableCell>
-                  <TableCell className={c.balance_afn > 0 ? "text-red-600" : "text-gray-600"} style={{ fontWeight: 500 }}>
+                  <TableCell className={`${c.balance_afn > 0 ? "text-red-600" : "text-gray-600"} font-medium`}>
                     {formatCurrency(c.balance_afn, "AFN")}
                   </TableCell>
-                  <TableCell className={c.balance_usd > 0 ? "text-red-600" : "text-gray-600"} style={{ fontWeight: 500 }}>
+                  <TableCell className={`${c.balance_usd > 0 ? "text-red-600" : "text-gray-600"} font-medium`}>
                     {formatCurrency(c.balance_usd, "USD")}
                   </TableCell>
                   <TableCell>
@@ -471,21 +471,21 @@ export default function Customers() {
               <div className="bg-gray-50 rounded-xl p-4 grid grid-cols-2 gap-3">
                 <div>
                   <p className="text-gray-400 text-xs mb-0.5">{language === "fa" ? "نام" : "Name"}</p>
-                  <p className="text-gray-800" style={{ fontWeight: 600 }}>{selectedCustomer.name}</p>
+                  <p className="text-gray-800 font-semibold">{selectedCustomer.name}</p>
                 </div>
                 <div>
                   <p className="text-gray-400 text-xs mb-0.5">{language === "fa" ? "شماره تماس" : "Phone"}</p>
-                  <p className="text-gray-800" style={{ fontWeight: 600 }}>{selectedCustomer.phone || "-"}</p>
+                  <p className="text-gray-800 font-semibold">{selectedCustomer.phone || "-"}</p>
                 </div>
                 <div>
                   <p className="text-gray-400 text-xs mb-0.5">{language === "fa" ? "قرضه (افغانی)" : "Debt (AFN)"}</p>
-                  <p className={selectedCustomer.balance_afn > 0 ? "text-red-600" : "text-emerald-600"} style={{ fontWeight: 700 }}>
+                  <p className={`${selectedCustomer.balance_afn > 0 ? "text-red-600" : "text-emerald-600"} font-bold`}>
                     {formatCurrency(selectedCustomer.balance_afn, "AFN")}
                   </p>
                 </div>
                 <div>
                   <p className="text-gray-400 text-xs mb-0.5">{language === "fa" ? "قرضه (دالر)" : "Debt (USD)"}</p>
-                  <p className={selectedCustomer.balance_usd > 0 ? "text-red-600" : "text-emerald-600"} style={{ fontWeight: 700 }}>
+                  <p className={`${selectedCustomer.balance_usd > 0 ? "text-red-600" : "text-emerald-600"} font-bold`}>
                     {formatCurrency(selectedCustomer.balance_usd, "USD")}
                   </p>
                 </div>
@@ -496,24 +496,24 @@ export default function Customers() {
                 {totalSalesAfn > 0 && (
                   <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 text-center">
                     <p className="text-blue-500 text-xs mb-1">{language === "fa" ? "خرید (؋)" : "Sales (AFN)"}</p>
-                    <p className="text-blue-700 text-sm" style={{ fontWeight: 700 }}>{formatCurrency(totalSalesAfn, "AFN")}</p>
+                    <p className="text-blue-700 text-sm font-bold">{formatCurrency(totalSalesAfn, "AFN")}</p>
                   </div>
                 )}
                 {totalPaymentsAfn > 0 && (
                   <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 text-center">
                     <p className="text-emerald-500 text-xs mb-1">{language === "fa" ? "پرداخت (؋)" : "Paid (AFN)"}</p>
-                    <p className="text-emerald-700 text-sm" style={{ fontWeight: 700 }}>{formatCurrency(totalPaymentsAfn, "AFN")}</p>
+                    <p className="text-emerald-700 text-sm font-bold">{formatCurrency(totalPaymentsAfn, "AFN")}</p>
                   </div>
                 )}
                 <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 text-center">
                   <p className="text-gray-400 text-xs mb-1">{language === "fa" ? "تراکنش‌ها" : "Transactions"}</p>
-                  <p className="text-gray-700 text-sm" style={{ fontWeight: 700 }}>{allTransactions.length}</p>
+                  <p className="text-gray-700 text-sm font-bold">{allTransactions.length}</p>
                 </div>
               </div>
 
               {/* All Transactions */}
               <div>
-                <h4 className="text-gray-700 mb-3 text-sm" style={{ fontWeight: 600 }}>
+                <h4 className="text-gray-700 mb-3 text-sm font-semibold">
                   {language === "fa" ? "همه تراکنش‌ها" : "All Transactions"} ({allTransactions.length})
                 </h4>
 
@@ -536,13 +536,13 @@ export default function Customers() {
                                   <ShoppingCart className="w-3.5 h-3.5 text-blue-600" />
                                 </div>
                                 <div>
-                                  <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full" style={{ fontWeight: 600 }}>
+                                  <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-semibold">
                                     {language === "fa" ? "خرید" : "Sale"}
                                   </span>
                                   <span className="text-gray-400 text-xs mr-2">{sale.date}</span>
                                 </div>
                               </div>
-                              <span className="text-blue-700 text-sm" style={{ fontWeight: 700 }}>
+                              <span className="text-blue-700 text-sm font-bold">
                                 {formatCurrency(sale.total_amount, sale.currency)}
                               </span>
                             </div>
@@ -559,7 +559,7 @@ export default function Customers() {
                               <div className="flex justify-between text-xs pt-1 border-t border-blue-100">
                                 <span className="text-emerald-600">{language === "fa" ? "پرداخت:" : "Paid:"} {formatCurrency(sale.paid_amount, sale.currency)}</span>
                                 {sale.remaining_amount > 0 && (
-                                  <span className="text-red-500" style={{ fontWeight: 600 }}>{language === "fa" ? "باقی:" : "Rem:"} {formatCurrency(sale.remaining_amount, sale.currency)}</span>
+                                  <span className="text-red-500 font-semibold">{language === "fa" ? "باقی:" : "Rem:"} {formatCurrency(sale.remaining_amount, sale.currency)}</span>
                                 )}
                               </div>
                             </div>
@@ -574,14 +574,14 @@ export default function Customers() {
                                 <CreditCard className="w-3.5 h-3.5 text-emerald-600" />
                               </div>
                               <div>
-                                <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full" style={{ fontWeight: 600 }}>
+                                <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-semibold">
                                   {language === "fa" ? "پرداخت" : "Payment"}
                                 </span>
                                 <span className="text-gray-400 text-xs mr-2">{pay.date}</span>
                                 {pay.note && <p className="text-gray-500 text-xs mt-0.5">{pay.note}</p>}
                               </div>
                             </div>
-                            <span className="text-emerald-700 text-sm" style={{ fontWeight: 700 }}>
+                            <span className="text-emerald-700 text-sm font-bold">
                               + {formatCurrency(pay.amount, pay.currency)}
                             </span>
                           </div>
@@ -595,14 +595,14 @@ export default function Customers() {
                                 <ArrowDownToLine className="w-3.5 h-3.5 text-purple-600" />
                               </div>
                               <div>
-                                <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full" style={{ fontWeight: 600 }}>
+                                <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-semibold">
                                   {language === "fa" ? "قرضه نقدی" : "Cash Debt"}
                                 </span>
                                 <span className="text-gray-400 text-xs mr-2">{w.date}</span>
                                 {w.description && <p className="text-gray-500 text-xs mt-0.5">{w.description}</p>}
                               </div>
                             </div>
-                            <span className="text-purple-700 text-sm" style={{ fontWeight: 700 }}>
+                            <span className="text-purple-700 text-sm font-bold">
                               {w.amount_afn > 0 ? formatCurrency(w.amount_afn, "AFN") : formatCurrency(w.amount_usd, "USD")}
                             </span>
                           </div>
