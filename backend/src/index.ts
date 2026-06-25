@@ -29,8 +29,9 @@ const PORT = process.env.PORT ?? 4000;
 
 // Security
 app.use(helmet());
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL ?? "http://localhost:5173",
+  origin: true,
   credentials: true,
 }));
 
@@ -42,18 +43,22 @@ app.use(morgan("combined"));
 app.use(express.json({ limit: "2mb" }));
 app.use(cookieParser());
 
-// CSRF Protection (set token on all routes, verify on state-changing methods)
+// CSRF Protection
 app.use(setCsrfToken);
 app.use(verifyCsrfToken);
 
 // Health check
-app.get("/health", (_req, res) => res.json({ status: "ok", ts: new Date().toISOString() }));
+app.get("/health", (_req, res) =>
+  res.json({
+    status: "ok",
+    ts: new Date().toISOString(),
+  })
+);
 
-// Routes — shop-level auth
+// Routes
 app.use("/api/auth", authRouter);
 app.use("/api/shop-auth", shopAuthRouter);
 
-// Routes — resource endpoints (all require shop JWT)
 app.use("/api/products", productsRouter);
 app.use("/api/categories", productsRouter);
 app.use("/api/customers", customersRouter);
@@ -67,7 +72,6 @@ app.use("/api/users", usersRouter);
 app.use("/api/logs", activityLogsRouter);
 app.use("/api/cash", cashRouter);
 
-// Super-admin routes
 app.use("/api/admin", adminRouter);
 
 app.use(notFound);
