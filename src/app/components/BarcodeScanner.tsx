@@ -98,7 +98,9 @@ export default function BarcodeScanner({ onScan, onClose, language = "fa" }: Bar
             </span>
           </div>
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Close scanner"
             className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
           >
             <X className="w-4 h-4" />
