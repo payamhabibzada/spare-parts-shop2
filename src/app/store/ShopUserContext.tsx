@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-const API_URL = "https://spare-parts-shop2-yvnf.vercel.app";
+const API_URL = "https://spare-parts-shop2.onrender.com";
 // ShopUser represents a shop owner/tenant with their own database
 export interface ShopUser {
   shop_user_id: string;
