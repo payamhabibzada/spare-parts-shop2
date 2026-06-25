@@ -18,12 +18,12 @@ interface ShopUserContextType {
 
   // Admin functions (for super admin only)
   allShopUsers: ShopUser[];
-  addShopUser: (user: Omit<ShopUser, "shop_user_id" | "created_date">) => void;
+  addShopUser: (user: Omit<ShopUser, "shop_user_id" | "created_date">) => Promise<void>;
   updateShopUser: (user: ShopUser) => void;
   deleteShopUser: (id: string) => void;
 
   // Authentication
-  loginShopUser: (email: string, password: string) => boolean;
+  loginShopUser: (email: string, password: string) => Promise<boolean>;
   logoutShopUser: () => void;
 
   // Database namespace for current user
@@ -61,10 +61,8 @@ export function ShopUserProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("global_current_shop_user", JSON.stringify(currentShopUser));
   }, [currentShopUser]);
 
-  const genId = () => crypto.randomUUID();
-
-  const addShopUser = async (user: any) => {
-  const response = await fetch(`${API_URL}/api/admin/shops`, {
+  const addShopUser = async (user: Omit<ShopUser, "shop_user_id" | "created_date">) => {
+    const response = await fetch(`${API_URL}/api/admin/shops`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -77,28 +75,28 @@ export function ShopUserProvider({ children }: { children: React.ReactNode }) {
         shopName: user.shop_name,
         isActive: user.is_active,
       }),
-    }
-  );
+    });
 
-  if (!response.ok) {
-    throw new Error("Failed");
-  }
+    if (!response.ok) {
+      throw new Error("Failed");
+    }
 
   const newShop = await response.json();
 
-  setAllShopUsers(prev => [
-    ...prev,
-    {
-      shop_user_id: newShop.id,
-      name: newShop.name,
-      email: newShop.email,
-      phone: user.phone,
-      shop_name: newShop.shopName,
-      created_date: new Date().toISOString(),
-      is_active: newShop.isActive,
-    },
-  ]);
-};
+    setAllShopUsers(prev => [
+      ...prev,
+      {
+        shop_user_id: newShop.id,
+        name: newShop.name,
+        email: newShop.email,
+        password: user.password,
+        phone: user.phone,
+        shop_name: newShop.shopName,
+        created_date: new Date().toISOString(),
+        is_active: newShop.isActive,
+      },
+    ]);
+  };
 
   const updateShopUser = (user: ShopUser) => {
     setAllShopUsers(prev => prev.map(u => u.shop_user_id === user.shop_user_id ? user : u));

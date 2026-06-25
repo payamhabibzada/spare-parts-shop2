@@ -1,5 +1,6 @@
-import "dotenv/config";
-import express from "express";
+import dotenv from "dotenv";
+dotenv.config();
+import express, { Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -48,7 +49,7 @@ app.use(setCsrfToken);
 app.use(verifyCsrfToken);
 
 // Health check
-app.get("/health", (_req, res) =>
+app.get("/health", (_req: Request, res: Response) =>
   res.json({
     status: "ok",
     ts: new Date().toISOString(),
