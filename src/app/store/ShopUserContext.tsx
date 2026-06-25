@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-
+const API_URL = "https://spare-parts-shop2-yvnf.vercel.app";
 // ShopUser represents a shop owner/tenant with their own database
 export interface ShopUser {
   shop_user_id: string;
@@ -63,14 +63,44 @@ export function ShopUserProvider({ children }: { children: React.ReactNode }) {
 
   const genId = () => crypto.randomUUID();
 
-  const addShopUser = (user: Omit<ShopUser, "shop_user_id" | "created_date">) => {
-    const newUser: ShopUser = {
-      ...user,
-      shop_user_id: genId(),
-      created_date: new Date().toISOString().split("T")[0],
-    };
-    setAllShopUsers(prev => [...prev, newUser]);
-  };
+  const addShopUser = async (user: any) => {
+  const response = await fetch(
+    "/api/admin/shops",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        phone: user.phone,
+        shopName: user.shop_name,
+        isActive: user.is_active,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed");
+  }
+
+  const newShop = await response.json();
+
+  setAllShopUsers(prev => [
+    ...prev,
+    {
+      shop_user_id: newShop.id,
+      name: newShop.name,
+      email: newShop.email,
+      phone: user.phone,
+      shop_name: newShop.shopName,
+      created_date: new Date().toISOString(),
+      is_active: newShop.isActive,
+    },
+  ]);
+};
 
   const updateShopUser = (user: ShopUser) => {
     setAllShopUsers(prev => prev.map(u => u.shop_user_id === user.shop_user_id ? user : u));
@@ -91,14 +121,49 @@ export function ShopUserProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const loginShopUser = (email: string, password: string): boolean => {
-    const user = allShopUsers.find(u => u.email === email && u.password === password && u.is_active);
-    if (user) {
-      setCurrentShopUser(user);
-      return true;
+  const loginShopUser = async (
+  email: string,
+  password: string
+): Promise<boolean> => {
+
+  const response = await fetch(
+    "/api/shop-auth/login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
     }
+  );
+
+  if (!response.ok) {
     return false;
-  };
+  }
+
+  const data = await response.json();
+
+  localStorage.setItem(
+    "accessToken",
+    data.accessToken
+  );
+
+  setCurrentShopUser({
+    shop_user_id: data.shopUser.id,
+    name: data.shopUser.name,
+    email: data.shopUser.email,
+    password: "",
+    phone: "",
+    shop_name: data.shopUser.shopName,
+    created_date: "",
+    is_active: true,
+  });
+
+  return true;
+};
 
   const logoutShopUser = () => {
     setCurrentShopUser(null);
