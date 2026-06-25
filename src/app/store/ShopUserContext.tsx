@@ -64,9 +64,7 @@ export function ShopUserProvider({ children }: { children: React.ReactNode }) {
   const genId = () => crypto.randomUUID();
 
   const addShopUser = async (user: any) => {
-  const response = await fetch(
-    "/api/admin/shops",
-    {
+  const response = await fetch(`${API_URL}/api/admin/shops`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -126,13 +124,11 @@ export function ShopUserProvider({ children }: { children: React.ReactNode }) {
   password: string
 ): Promise<boolean> => {
 
-  const response = await fetch(
-    "/api/shop-auth/login",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  const response = await fetch(`${API_URL}/api/shop-auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
       body: JSON.stringify({
         email,
         password,
