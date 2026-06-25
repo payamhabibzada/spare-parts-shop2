@@ -8,9 +8,14 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { generateAccessToken, generateRefreshToken } from '../lib/jwt';
 
-const prisma = new PrismaClient();
+if (!process.env.DATABASE_URL) {
+  // eslint-disable-next-line no-console
+  console.warn('Skipping authentication DB tests: DATABASE_URL not set');
+  describe.skip('Authentication (skipped: no DATABASE_URL)', () => {});
+} else {
+  const prisma = new PrismaClient();
 
-describe('Authentication', () => {
+  describe('Authentication', () => {
   let testShopId: string;
 
   beforeAll(async () => {
@@ -138,3 +143,4 @@ describe('Authentication', () => {
     });
   });
 });
+}
