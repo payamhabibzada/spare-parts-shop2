@@ -45,8 +45,8 @@ app.use(express.json({ limit: "2mb" }));
 app.use(cookieParser());
 
 // CSRF Protection
-app.use(setCsrfToken);
-app.use(verifyCsrfToken);
+//app.use(setCsrfToken);
+//app.use(verifyCsrfToken);
 
 // Health check
 app.get("/health", (_req: Request, res: Response) =>
